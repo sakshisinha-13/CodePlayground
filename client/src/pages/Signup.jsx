@@ -1,7 +1,16 @@
+// src/pages/Signup.jsx
+// -----------------------------------------------------------------------------
+// Signup page for new CodePlayground users. Handles:
+// - Input fields for username, email, password, confirm password
+// - Validates input fields
+// - Sends signup request to backend
+// - Stores user/token in localStorage and redirects to Dashboard on success
+// -----------------------------------------------------------------------------
+
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Logo from "../assets/logo.svg";
-import { ToastContainer, toast } from "react-toastify";
+import Logo from "../assets/logo.svg";                  // App logo
+import { ToastContainer, toast } from "react-toastify"; // Toast notifications
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 
@@ -22,6 +31,7 @@ function Signup() {
     theme: "dark",
   };
 
+  // 🔐 Redirect if already logged in
   useEffect(() => {
     const existingUser = localStorage.getItem("codeplayground-user");
     if (existingUser) {
@@ -29,6 +39,7 @@ function Signup() {
     }
   }, [navigate]);
 
+  // ✅ Handle form submission
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -59,12 +70,13 @@ function Signup() {
       toast.error(msg, toastOptions);
       console.error("❌ Signup failed:", msg);
 
-      // ❗ Ensure no leftover token/data
+      // Clean up localStorage if any leftover
       localStorage.removeItem("codeplayground-user");
       localStorage.removeItem("token");
     }
   };
 
+  // 🧠 Validation logic
   const handleValidation = () => {
     const { username, email, password, confirmPassword } = values;
     if (password !== confirmPassword) {
@@ -83,6 +95,7 @@ function Signup() {
     return true;
   };
 
+  // 🔄 Handle field changes
   const handleChange = (event) => {
     setValues({ ...values, [event.target.name]: event.target.value });
   };

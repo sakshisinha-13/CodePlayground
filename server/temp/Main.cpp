@@ -2,6 +2,7 @@
 using namespace std;
 
 int main() {
-    cout<<(1==2);
+    cout << "Hello, World!" << endl;
+    cout<<1;
     return 0;
 }

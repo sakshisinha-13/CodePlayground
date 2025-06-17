@@ -1,3 +1,9 @@
+// components/SimpleTableView.jsx
+// -----------------------------------------------------------------------------
+// A simple table-based UI component to display filtered questions.
+// Displays: Link (clickable), Type (OA/Interview), Topic, Difficulty
+// -----------------------------------------------------------------------------
+
 import React from 'react';
 
 export default function SimpleTableView({ questions }) {

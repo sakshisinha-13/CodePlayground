@@ -1,7 +1,16 @@
+// src/pages/Login.jsx
+// -----------------------------------------------------------------------------
+// Login page for CodePlayground users. Handles:
+// - Email/password input and validation
+// - Login API call
+// - Storing user & token in localStorage
+// - Redirecting to Dashboard on success
+// -----------------------------------------------------------------------------
+
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Logo from "../assets/logo.svg";
-import { ToastContainer, toast } from "react-toastify";
+import Logo from "../assets/logo.svg";                   // App logo
+import { ToastContainer, toast } from "react-toastify";  // Notifications
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 
@@ -20,12 +29,14 @@ function Login() {
     theme: "dark",
   };
 
+  // 🔐 Auto-redirect if already logged in
   useEffect(() => {
     if (localStorage.getItem("codeplayground-user")) {
       navigate("/dashboard");
     }
   }, [navigate]);
 
+  // 🚀 Handle login form submission
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (handleValidation()) {
@@ -44,6 +55,7 @@ function Login() {
     }
   };
 
+  // 🧠 Validate form fields
   const handleValidation = () => {
     const { email, password } = values;
     if (!email) {
@@ -56,6 +68,7 @@ function Login() {
     return true;
   };
 
+  // 🔄 Handle input field changes
   const handleChange = (event) => {
     setValues({ ...values, [event.target.name]: event.target.value });
   };

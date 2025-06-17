@@ -1,8 +1,15 @@
 // server/index.js
-const express    = require("express");
-const cors       = require("cors");
+// -----------------------------------------------------------------------------
+// Main Express server entry point
+// - Connects to MongoDB
+// - Loads environment variables
+// - Mounts auth and code execution routes
+// -----------------------------------------------------------------------------
+
+const express = require("express");
+const cors = require("cors");
 const bodyParser = require("body-parser");
-const mongoose   = require("mongoose");
+const mongoose = require("mongoose");
 require("dotenv").config();
 
 const app = express();
@@ -12,7 +19,7 @@ app.use(bodyParser.json());
 // --- MongoDB Connection ---
 mongoose
   .connect(process.env.MONGO_URI, {
-    useNewUrlParser:    true,
+    useNewUrlParser: true,
     useUnifiedTopology: true,
   })
   .then(() => console.log("✅ MongoDB connected"))
@@ -37,7 +44,6 @@ app.use("/api/auth", authRoutes);
 const executeRoute = require("./routes/execute");
 app.use("/api/execute", executeRoute);
 
-// --- (Optional) Other routes, middleware, error handlers here ---
 
 // --- Start Server ---
 const PORT = process.env.PORT || 5000;

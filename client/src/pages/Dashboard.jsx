@@ -1,4 +1,13 @@
-import { useState, useEffect } from 'react';
+// src/pages/Dashboard.jsx
+// -----------------------------------------------------------------------------
+// Main dashboard page after login. Allows users to:
+// - Search for companies
+// - Filter coding questions by role, YOE, topic, year, difficulty, etc.
+// - Export questions to CSV, PDF, Markdown
+// - View insights: topic-wise pie chart, year-wise trend, repeated questions
+// -----------------------------------------------------------------------------
+
+import { useState, useEffect, useRef } from 'react';
 import microsoftData from '../data/Questions.json';
 import { Pie } from 'react-chartjs-2';
 import { exportToCSV } from '../exports/exportCSV';
@@ -6,7 +15,6 @@ import { exportToMarkdown } from '../exports/exportMarkdown';
 import { exportToPDFmake } from '../exports/exportPDFmake';
 import SimpleTableView from '../exports/SimpleTableView';
 import QuestionList from '../components/QuestionList';
-import { useRef } from "react";
 import Navbar from "../components/Navbar";
 import {
   Chart as ChartJS,
@@ -18,7 +26,7 @@ import {
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const allCompanies = {
-  Microsoft: microsoftData[0] 
+  Microsoft: microsoftData[0]
 };
 
 const topicLabels = {
@@ -31,6 +39,7 @@ const topicLabels = {
 };
 
 export default function Dashboard() {
+  // 🔹 State for filters and UI control
   const [query, setQuery] = useState('');
   const [selectedCompanies, setSelectedCompanies] = useState([]);
   const [role, setRole] = useState('');
@@ -50,35 +59,36 @@ export default function Dashboard() {
     document.documentElement.classList.toggle('dark', darkMode);
   }, [darkMode]);
 
- const handleSearch = () => {
-  const queryLower = query.trim().toLowerCase();
+  // 🔍 Search companies from query
+  const handleSearch = () => {
+    const queryLower = query.trim().toLowerCase();
 
-  // Skip resetting filters if query hasn't changed
-  if (previousQuery.current === queryLower) return;
+    // Skip resetting filters if query hasn't changed
+    if (previousQuery.current === queryLower) return;
 
-  const matches = Object.keys(allCompanies)
-    .filter(companyName =>
-      companyName.toLowerCase().includes(queryLower)
-    )
-    .map(companyName => allCompanies[companyName]);
+    const matches = Object.keys(allCompanies)
+      .filter(companyName =>
+        companyName.toLowerCase().includes(queryLower)
+      )
+      .map(companyName => allCompanies[companyName]);
 
-  setSelectedCompanies(matches.length > 0 ? matches : []);
-  setNoMatch(matches.length === 0);
+    setSelectedCompanies(matches.length > 0 ? matches : []);
+    setNoMatch(matches.length === 0);
 
-  // Reset only when company changes
-  setRole('');
-  setYoe('');
-  setAssessmentType('');
-  setTopic('');
-  setYear('');
-  setDifficulty('');
-  setSimpleView(false);
-  setTickedQuestions({});
+    // Reset only when company changes
+    setRole('');
+    setYoe('');
+    setAssessmentType('');
+    setTopic('');
+    setYear('');
+    setDifficulty('');
+    setSimpleView(false);
+    setTickedQuestions({});
 
-  previousQuery.current = queryLower;
-};
+    previousQuery.current = queryLower;
+  };
 
-
+  // ✅ Tick/un-tick questions
   const toggleTick = (link) => {
     setTickedQuestions(prev => ({
       ...prev,
@@ -86,81 +96,82 @@ export default function Dashboard() {
     }));
   };
 
-const getFilteredQuestions = () => {
-  if (selectedCompanies.length === 0) return [];
+  // 🔄 Filter logic based on all selected filters
+  const getFilteredQuestions = () => {
+    if (selectedCompanies.length === 0) return [];
 
-  const filteredCompanies = selectedCompanies.filter(c => {
-    if (role && c.role !== role) return false;
-    if (yoe && c.yoe !== yoe) return false;
-    return true;
-  });
+    const filteredCompanies = selectedCompanies.filter(c => {
+      if (role && c.role !== role) return false;
+      if (yoe && c.yoe !== yoe) return false;
+      return true;
+    });
 
-  let results = [];
+    let results = [];
 
-  filteredCompanies.forEach(company => {
-    // ========== OA Section ==========
-    if (assessmentType === 'OA') {
-      const oaData = company.oa || {};
-      const entries = year && oaData[year] ? { [year]: oaData[year] } : oaData;
+    filteredCompanies.forEach(company => {
+      // OA filtering
+      if (assessmentType === 'OA') {
+        const oaData = company.oa || {};
+        const entries = year && oaData[year] ? { [year]: oaData[year] } : oaData;
 
-      for (const [yr, questions] of Object.entries(entries)) {
-        for (const q of questions) {
-          if (typeof q === 'object' && (!difficulty || q.difficulty === difficulty)) {
-            results.push({
-              type: 'OA',
-              link: q.link || '',
-              difficulty: q.difficulty || 'Unknown',
-              topic: q.topic || 'General',
-              year: q.year || yr,
-              title: q.title || `Question`,
-              description: q.description || `${q.topic || 'General'} (${q.difficulty || 'Unknown'})`
-            });
+        for (const [yr, questions] of Object.entries(entries)) {
+          for (const q of questions) {
+            if (typeof q === 'object' && (!difficulty || q.difficulty === difficulty)) {
+              results.push({
+                type: 'OA',
+                link: q.link || '',
+                difficulty: q.difficulty || 'Unknown',
+                topic: q.topic || 'General',
+                year: q.year || yr,
+                title: q.title || `Question`,
+                description: q.description || `${q.topic || 'General'} (${q.difficulty || 'Unknown'})`
+              });
+            }
           }
         }
       }
-    }
 
-    // ========== Interview Section ==========
-    if (assessmentType === 'Interview') {
-      const interviewData = company.interview || {};
+      // Interview filtering
+      if (assessmentType === 'Interview') {
+        const interviewData = company.interview || {};
 
-      for (const [section, items] of Object.entries(interviewData)) {
-        const sectionKey = section.toLowerCase();
+        for (const [section, items] of Object.entries(interviewData)) {
+          const sectionKey = section.toLowerCase();
 
-        if (topic && topic !== sectionKey) continue;
+          if (topic && topic !== sectionKey) continue;
 
-        const filteredItems = items.filter(q => {
-          if (typeof q === 'object') {
-            const matchYear = !year || q.year === year;
-            const matchDiff = !difficulty || q.difficulty === difficulty;
-            return matchYear && matchDiff;
-          }
-          return !difficulty; // for string-based questions (e.g., Behavioral)
-        });
+          const filteredItems = items.filter(q => {
+            if (typeof q === 'object') {
+              const matchYear = !year || q.year === year;
+              const matchDiff = !difficulty || q.difficulty === difficulty;
+              return matchYear && matchDiff;
+            }
+            return !difficulty; // for string-based questions (e.g., Behavioral)
+          });
 
-        results.push(
-          ...filteredItems.map((q, i) => ({
-            type: 'Interview',
-            link: typeof q === 'string' ? q : q.link || q.question || '',
-            difficulty: typeof q === 'object' ? q.difficulty : 'Easy',
-            topic:
-              typeof q === 'object'
-                ? q.topic || topicLabels[sectionKey] || sectionKey
-                : topicLabels[sectionKey] || sectionKey,
-            year: typeof q === 'object' ? q.year : 'N/A',
-            title: typeof q === 'object' ? q.title || `Interview Question ${i + 1}` : q,
-            description:
-              typeof q === 'object'
-                ? q.description || `${q.topic || 'General'} (${q.difficulty || 'Unknown'})`
-                : q
-          }))
-        );
+          results.push(
+            ...filteredItems.map((q, i) => ({
+              type: 'Interview',
+              link: typeof q === 'string' ? q : q.link || q.question || '',
+              difficulty: typeof q === 'object' ? q.difficulty : 'Easy',
+              topic:
+                typeof q === 'object'
+                  ? q.topic || topicLabels[sectionKey] || sectionKey
+                  : topicLabels[sectionKey] || sectionKey,
+              year: typeof q === 'object' ? q.year : 'N/A',
+              title: typeof q === 'object' ? q.title || `Interview Question ${i + 1}` : q,
+              description:
+                typeof q === 'object'
+                  ? q.description || `${q.topic || 'General'} (${q.difficulty || 'Unknown'})`
+                  : q
+            }))
+          );
+        }
       }
-    }
-  });
+    });
 
-  return results;
-};
+    return results;
+  };
 
 
   // Gather years from all selected companies for the year filter
@@ -174,6 +185,7 @@ const getFilteredQuestions = () => {
 
   const filteredQuestions = getFilteredQuestions();
 
+  // 📊 Stats for insights section
   const topicCounts = filteredQuestions.reduce((acc, q) => {
     const label = q.topic || 'General';
     acc[label] = (acc[label] || 0) + 1;
@@ -209,7 +221,7 @@ const getFilteredQuestions = () => {
 
   return (
     <div className={`min-h-screen px-6 py-6 ${darkMode ? 'bg-gray-900 text-white' : 'bg-gray-200 text-black'}`}>
-      <Navbar darkMode={darkMode} setDarkMode={setDarkMode}/>
+      <Navbar darkMode={darkMode} setDarkMode={setDarkMode} />
       <div className="w-full mx-auto space-y-8">
 
         {/* Search Section */}
@@ -361,10 +373,10 @@ const getFilteredQuestions = () => {
                   <SimpleTableView questions={filteredQuestions} />
                 ) : (
                   <QuestionList
-  filteredQuestions={filteredQuestions}
-  tickedQuestions={tickedQuestions}
-  toggleTick={toggleTick}
-/>
+                    filteredQuestions={filteredQuestions}
+                    tickedQuestions={tickedQuestions}
+                    toggleTick={toggleTick}
+                  />
                 )}
               </div>
 

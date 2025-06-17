@@ -1,9 +1,18 @@
+// src/pages/Playground.jsx
+// -----------------------------------------------------------------------------
+// This page renders the code execution environment. It includes:
+// - Problem description on the left (title, difficulty, topic, year)
+// - Code editor on the right with AceEditor
+// - Language selector, stdin input, and run button
+// - Calls backend to execute code and display output
+// -----------------------------------------------------------------------------
+
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import AceEditor from "react-ace";
 import axios from "axios";
 
-// ACE config
+// 🔧 ACE Editor configuration
 import "ace-builds/src-noconflict/ace";
 import "ace-builds/src-noconflict/ext-language_tools";
 import "ace-builds/src-noconflict/mode-javascript";
@@ -11,6 +20,7 @@ import "ace-builds/src-noconflict/mode-python";
 import "ace-builds/src-noconflict/mode-c_cpp";
 import "ace-builds/src-noconflict/theme-monokai";
 
+// 📌 Default template code for each language
 const defaultCodeMap = {
   javascript: `function greet(name) {
   return "Hello, " + name + "!";
@@ -31,6 +41,7 @@ int main() {
 }`
 };
 
+// 🎨 Badge colors based on difficulty level
 const difficultyBadge = {
   Easy: "bg-green-100 text-green-800",
   Medium: "bg-yellow-100 text-yellow-800",
@@ -47,10 +58,12 @@ const Playground = () => {
   const [output, setOutput] = useState("");
   const [loading, setLoading] = useState(false);
 
+  // 🔐 Redirect if opened without question state
   useEffect(() => {
     if (!state || !state.title) navigate("/dashboard");
   }, [state, navigate]);
 
+  // 🚀 Run code via backend API
   const runCode = async () => {
     setLoading(true);
     try {
@@ -67,11 +80,11 @@ const Playground = () => {
     }
   };
 
-  if (!state) return null;
+  if (!state) return null;    // prevent render if state is missing
 
   return (
     <div className="min-h-screen flex flex-col md:flex-row bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white">
-      {/* LEFT PANEL */}
+      {/* LEFT PANEL - Question Description  */}
       <div className="md:w-1/2 p-6 border-b md:border-b-0 md:border-r border-gray-300 dark:border-gray-700">
         <button
           className="mb-4 px-3 py-1 bg-gray-200 dark:bg-gray-700 text-sm rounded hover:bg-gray-300 dark:hover:bg-gray-600"
@@ -90,6 +103,7 @@ const Playground = () => {
           <span className="px-2 py-1 text-xs rounded bg-blue-100 text-blue-800">{state.year}</span>
         </div>
 
+        {/* 📄 Description */}
         <div className="mt-4">
           <h2 className="text-md font-semibold mb-1">📝 Description:</h2>
           <p className="whitespace-pre-wrap text-sm text-gray-800 dark:text-gray-200">
@@ -97,6 +111,7 @@ const Playground = () => {
           </p>
         </div>
 
+        {/* 💡 Instructions */}
         <div className="mt-4">
           <h2 className="text-md font-semibold mb-1">Instructions:</h2>
           <ul className="list-disc list-inside text-gray-700 dark:text-gray-300 text-sm">
@@ -107,8 +122,9 @@ const Playground = () => {
         </div>
       </div>
 
-      {/* RIGHT PANEL */}
+      {/* RIGHT PANEL - Code Editor & Output */}
       <div className="md:w-1/2 p-6 flex flex-col gap-4">
+        {/* Language Selector */}
         <div className="flex gap-4 items-center">
           <label className="font-medium">Language:</label>
           <select
@@ -126,6 +142,7 @@ const Playground = () => {
           </select>
         </div>
 
+        {/* Ace Code Editor */}
         <AceEditor
           mode={language}
           theme="monokai"
@@ -142,6 +159,7 @@ const Playground = () => {
           }}
         />
 
+        {/* Input box */}
         <div>
           <label className="block text-sm font-medium mb-1">Custom Input (stdin):</label>
           <textarea
@@ -152,6 +170,7 @@ const Playground = () => {
           />
         </div>
 
+        {/* Run Button */}
         <button
           className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50"
           onClick={runCode}
@@ -160,6 +179,7 @@ const Playground = () => {
           {loading ? "Running…" : "Run Code"}
         </button>
 
+        {/* Output box */}
         <div>
           <label className="block text-sm font-medium mb-1">Output:</label>
           <pre className="w-full p-2 bg-gray-200 dark:bg-gray-800 rounded overflow-x-auto whitespace-pre-wrap">

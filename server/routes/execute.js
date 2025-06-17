@@ -1,4 +1,13 @@
 // server/routes/execute.js
+// -----------------------------------------------------------------------------
+// POST /api/execute
+// Dynamically compiles and runs code for supported languages:
+// - JavaScript (Node.js)
+// - Python
+// - C++ (via g++)
+// Accepts optional stdin and returns the stdout or errors
+// -----------------------------------------------------------------------------
+
 const express = require("express");
 const router = express.Router();
 const fs = require("fs");
@@ -10,6 +19,7 @@ if (!fs.existsSync(WORKSPACE)) fs.mkdirSync(WORKSPACE);
 
 const isWindows = process.platform === "win32";
 
+// Language configuration
 const LANG_CONFIG = {
   javascript: {
     file: "Main.js",
@@ -39,22 +49,23 @@ router.post("/", (req, res) => {
   const filePath = path.join(WORKSPACE, cfg.file);
   fs.writeFileSync(filePath, code);
 
+  // Compile (if needed)
   const compile = cfg.compile
     ? new Promise((resolve, reject) => {
-        exec(
-          cfg.compile,
-          { cwd: WORKSPACE, timeout: 5000 },
-          (err, stdout, stderr) =>
-            err ? reject(stderr || err.message) : resolve()
-        );
-      })
+      exec(
+        cfg.compile,
+        { cwd: WORKSPACE, timeout: 5000 },
+        (err, stdout, stderr) =>
+          err ? reject(stderr || err.message) : resolve()
+      );
+    })
     : Promise.resolve();
 
   compile
     .then(() => {
       let cmd = cfg.run;
 
-      // Sanitize and format input
+      // Sanitize input for piping
       const safeInput = input.replace(/"/g, '\\"');
 
       // Handle stdin piping cross-platform
@@ -74,6 +85,7 @@ router.post("/", (req, res) => {
         }
       }
 
+      // Execute final command
       exec(
         cmd,
         { cwd: WORKSPACE, timeout: 5000 },
