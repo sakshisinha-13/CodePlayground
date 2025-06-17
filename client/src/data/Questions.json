@@ -1,0 +1,573 @@
+[
+  {
+  "company": "Microsoft",
+  "role": "Software Engineer",
+  "yoe": "College Graduate",
+  "oa": {
+    "dsa":[
+      {
+        "year": "2019",
+        "link": "https://www.geeksforgeeks.org/maximum-distance-between-two-points-in-coordinate-plane-using-rotating-calipers-method/",
+        "difficulty": "Hard",
+        "topic": "Greedy",
+        "description": "Maximum Distance Between Two Points In Coordinate Plane Using Rotating Calipers Method - A standard problem in Greedy. (Difficulty: Hard)",
+        "title": "Maximum Distance Between Two Points In Coordinate Plane Using Rotating Calipers Method"
+      },
+      {
+        "year": "2019",
+        "link": "https://leetcode.com/problems/minimum-number-of-moves-to-make-palindrome/description/",
+        "difficulty": "Hard",
+        "topic": "General",
+        "description": "Minimum Number Of Moves To Make Palindrome - A standard problem in General. (Difficulty: Hard)",
+        "title": "Minimum Number Of Moves To Make Palindrome"
+      },
+      {
+        "year": "2021",
+        "link": "https://www.geeksforgeeks.org/problems/longest-increasing-subsequence-1587115620/1",
+        "difficulty": "Medium",
+        "topic": "Dynamic Programming",
+        "description": "Longest Increasing Subsequence 1587115620 - A standard problem in Dynamic Programming. (Difficulty: Medium)",
+        "title": "Longest Increasing Subsequence 1587115620"
+      },
+      {
+        "year": "2022",
+        "link": "https://www.geeksforgeeks.org/remove-three-consecutive-duplicates-string/",
+        "difficulty": "Medium",
+        "topic": "String Manipulation",
+        "description": "Remove Three Consecutive Duplicates String - A standard problem in String Manipulation. (Difficulty: Medium)",
+        "title": "Remove Three Consecutive Duplicates String"
+      },
+      {
+        "year": "2022",
+        "link": "https://www.geeksforgeeks.org/rock-paper-scissor-game-in-cpp/",
+        "difficulty": "Easy",
+        "topic": " Implementation / Simulation",
+        "description": "Rock Paper Scissor Game In Cpp - A standard problem in  Implementation / Simulation. (Difficulty: Easy)",
+        "title": "Rock Paper Scissor Game In Cpp"
+      },
+      {
+        "year": "2024",
+        "link": "https://www.geeksforgeeks.org/program-decimal-hexadecimal-conversion/",
+        "difficulty": "Easy",
+        "topic": "Bit Manipulation / Number Systems",
+        "description": "Program Decimal Hexadecimal Conversion - A standard problem in Bit Manipulation / Number Systems. (Difficulty: Easy)",
+        "title": "Program Decimal Hexadecimal Conversion"
+      },
+      {
+         "year": "2024",
+        "link": "https://leetcode.com/problems/longest-path-with-different-adjacent-characters/description/",
+        "difficulty": "Hard",
+        "topic": "Trees + DFS",
+        "description": "Longest Path With Different Adjacent Characters - A standard problem in Trees + DFS. (Difficulty: Hard)",
+        "title": "Longest Path With Different Adjacent Characters"
+      },
+      {
+         "year": "2024",
+        "link": "https://leetcode.com/problems/minimum-number-of-moves-to-make-palindrome/description/",
+        "difficulty": "Hard",
+        "topic": "Two Pointers / Greedy",
+        "description": "Minimum Number Of Moves To Make Palindrome - A standard problem in Two Pointers / Greedy. (Difficulty: Hard)",
+        "title": "Minimum Number Of Moves To Make Palindrome"
+      },
+      {
+         "year": "2024",
+        "link": "https://www.geeksforgeeks.org/problems/swap-all-odd-and-even-bits-1587115621/1",
+        "difficulty": "Easy",
+        "topic": "Bit Manipulation",
+        "description": "Swap All Odd And Even Bits 1587115621 - A standard problem in Bit Manipulation. (Difficulty: Easy)",
+        "title": "Swap All Odd And Even Bits 1587115621"
+      },
+      {
+         "year": "2024",
+        "link": "https://www.geeksforgeeks.org/convert-binary-tree-to-doubly-linked-list-by-keeping-track-of-visited-node/",
+        "difficulty": "Medium",
+        "topic": "Trees + Linked List",
+        "description": "Convert Binary Tree To Doubly Linked List By Keeping Track Of Visited Node - A standard problem in Trees + Linked List. (Difficulty: Medium)",
+        "title": "Convert Binary Tree To Doubly Linked List By Keeping Track Of Visited Node"
+      },
+      {
+         "year": "2024",
+        "link": "https://www.geeksforgeeks.org/sort-a-linked-list-of-0s-1s-or-2s/",
+        "difficulty": "Medium",
+        "topic": "Linked List",
+        "description": "Sort A Linked List Of 0S 1S Or 2S - A standard problem in Linked List. (Difficulty: Medium)",
+        "title": "Sort A Linked List Of 0S 1S Or 2S"
+      },
+      {
+         "year": "2024",
+        "link": "https://www.geeksforgeeks.org/minimum-time-required-so-that-all-oranges-become-rotten/",
+        "difficulty": "Medium",
+        "topic": "Graphs + BFS",
+        "description": "Minimum Time Required So That All Oranges Become Rotten - A standard problem in Graphs + BFS. (Difficulty: Medium)",
+        "title": "Minimum Time Required So That All Oranges Become Rotten"
+      },
+      {
+         "year": "2025",
+        "link": "https://www.geeksforgeeks.org/problems/kadanes-algorithm-1587115620/1",
+        "difficulty": "Medium",
+        "topic": "Dynamic Programming",
+        "description": "Kadanes Algorithm 1587115620 - A standard problem in Dynamic Programming. (Difficulty: Medium)",
+        "title": "Kadanes Algorithm 1587115620"
+      },
+      {
+         "year": "2025",
+        "link": "https://www.geeksforgeeks.org/problems/evaluation-of-postfix-expression1735/1",
+        "difficulty": "Medium",
+        "topic": "Stacks",
+        "description": "Evaluation Of Postfix Expression1735 - A standard problem in Stacks. (Difficulty: Medium)",
+        "title": "Evaluation Of Postfix Expression1735"
+      },
+      {
+         "year": "2025",
+        "link": "https://www.geeksforgeeks.org/problems/dice-throw5349/1",
+        "difficulty": "Medium",
+        "topic": "Dynamic Programming",
+        "description": "Dice Throw5349 - A standard problem in Dynamic Programming. (Difficulty: Medium)",
+        "title": "Dice Throw5349"
+      }
+    ]
+  },
+  "interview": {
+    "dsa": [
+      {
+        "year": "2019",
+        "link": "https://www.geeksforgeeks.org/longest-increasing-consecutive-subsequence/",
+        "difficulty": "Easy",
+        "topic": "Arrays / DP",
+        "description": "Longest Increasing Consecutive Subsequence - A standard problem in Arrays / DP. (Difficulty: Easy)",
+        "title": "Longest Increasing Consecutive Subsequence"
+      },
+      {
+        "year": "2020",
+        "link": "https://www.geeksforgeeks.org/reverse-a-linked-list-in-groups-of-given-size/",
+        "difficulty": "Hard",
+        "topic": "Linked List",
+        "description": "Reverse A Linked List In Groups Of Given Size - A standard problem in Linked List. (Difficulty: Hard)",
+        "title": "Reverse A Linked List In Groups Of Given Size"
+      },
+      {
+        "year": "2020",
+        "link": "https://www.geeksforgeeks.org/level-order-traversal-in-spiral-form/",
+        "difficulty": "Easy",
+        "topic": "Trees / BFS",
+        "description": "Level Order Traversal In Spiral Form - A standard problem in Trees / BFS. (Difficulty: Easy)",
+        "title": "Level Order Traversal In Spiral Form"
+      },
+      {
+        "year": "2020",
+        "link": "https://www.geeksforgeeks.org/find-the-point-where-maximum-intervals-overlap/",
+        "difficulty": "Medium",
+        "topic": "Greedy",
+        "description": "Find The Point Where Maximum Intervals Overlap - A standard problem in Greedy. (Difficulty: Medium)",
+        "title": "Find The Point Where Maximum Intervals Overlap"
+      },
+      {
+        "year": "2020",
+        "link": "https://www.geeksforgeeks.org/check-for-majority-element-in-a-sorted-array/",
+        "difficulty": "Easy",
+        "topic": "Binary Search",
+        "description": "Check For Majority Element In A Sorted Array - A standard problem in Binary Search. (Difficulty: Easy)",
+        "title": "Check For Majority Element In A Sorted Array"
+      },
+      {
+        "year": "2021",
+        "link": "https://www.geeksforgeeks.org/problems/reverse-a-stack/1",
+        "difficulty": "Medium",
+        "topic": "Stacks",
+        "description": "Reverse A Stack - A standard problem in Stacks. (Difficulty: Medium)",
+        "title": "Reverse A Stack"
+      },
+      {
+        "year": "2022",
+        "link": "https://www.geeksforgeeks.org/problems/compute-before-matrix--170637/1",
+        "difficulty": "Medium",
+        "topic": "Matrix / Prefix Sum",
+        "description": "Compute Before Matrix  170637 - A standard problem in Matrix / Prefix Sum. (Difficulty: Medium)",
+        "title": "Compute Before Matrix  170637"
+      },
+      {
+        "year": "2022",
+        "link": "https://leetcode.com/problems/generate-parentheses/description/",
+        "difficulty": "Medium",
+        "topic": "Backtracking",
+        "description": "\ud83d\udd39 Difficulty: Medium\n\ud83d\udd39 Topic: Backtracking\n\n\ud83d\udcdd Problem:\nGiven n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.\n\n\ud83d\udce5 Input: 3\n\ud83d\udce4 Output: [\"((()))\",\"(()())\",\"(())()\",\"()(())\",\"()()()\"]\n\n\u2705 Constraints:\n- 1 \u2264 n \u2264 8",
+        "title": "Generate Parentheses"
+      },
+      {
+        "year": "2022",
+        "link": "https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/description/",
+        "difficulty": "Medium",
+        "topic": "Trees",
+        "description": "Lowest Common Ancestor Of A Binary Tree - A standard problem in Trees. (Difficulty: Medium)",
+        "title": "Lowest Common Ancestor Of A Binary Tree"
+      },
+      {
+        "year": "2022",
+        "link": "https://www.geeksforgeeks.org/josephus-problem/",
+        "difficulty": "Easy",
+        "topic": "Recursion / Math",
+        "description": "Josephus Problem - A standard problem in Recursion / Math. (Difficulty: Easy)",
+        "title": "Josephus Problem"
+      },
+      {
+        "year": "2022",
+        "link": "https://leetcode.com/problems/word-ladder/description/",
+        "difficulty": "Hard",
+        "topic": "Graph",
+        "description": "Word Ladder - A standard problem in Graph. (Difficulty: Hard)",
+        "title": "Word Ladder"
+      },
+      {
+        "year": "2022",
+        "link": "https://www.geeksforgeeks.org/problems/search-in-a-matrix17201720/1",
+        "difficulty": "Medium",
+        "topic": "Matrix / Binary Search",
+        "description": "Search In A Matrix17201720 - A standard problem in Matrix / Binary Search. (Difficulty: Medium)",
+        "title": "Search In A Matrix17201720"
+      },
+      {
+        "year": "2022",
+        "link": "https://leetcode.com/problems/combination-sum/description/",
+        "difficulty": "Medium",
+        "topic": "Backtracking",
+        "description": "Combination Sum - A standard problem in Backtracking. (Difficulty: Medium)",
+        "title": "Combination Sum"
+      },
+      {
+        "year": "2023",
+        "link": "https://www.geeksforgeeks.org/problems/powx-n/1",
+        "difficulty": "Easy",
+        "topic": "Recursion",
+        "description": "Powx N - A standard problem in Recursion. (Difficulty: Easy)",
+        "title": "Powx N"
+      },
+      {
+        "year": "2023",
+        "link": "https://www.geeksforgeeks.org/problems/add-1-to-a-number-represented-as-linked-list/1",
+        "difficulty": "Medium",
+        "topic": "Linked List",
+        "description": "Add 1 To A Number Represented As Linked List - A standard problem in Linked List. (Difficulty: Medium)",
+        "title": "Add 1 To A Number Represented As Linked List"
+      },
+      {
+        "year": "2023",
+        "link": "https://www.geeksforgeeks.org/lru-cache-implementation/",
+        "difficulty": "Medium",
+        "topic": "Hashing",
+        "description": "Lru Cache Implementation - A standard problem in Hashing. (Difficulty: Medium)",
+        "title": "Lru Cache Implementation"
+      },
+      {
+        "year": "2023",
+        "link": "https://www.geeksforgeeks.org/problems/prefix-to-postfix-conversion/1",
+        "difficulty": "Medium",
+        "topic": "Stacks",
+        "description": "Prefix To Postfix Conversion - A standard problem in Stacks. (Difficulty: Medium)",
+        "title": "Prefix To Postfix Conversion"
+      },
+      {
+        "year": "2023",
+        "link": "https://www.geeksforgeeks.org/problems/stock-span-problem-1587115621/1",
+        "difficulty": "Medium",
+        "topic": "Stacks",
+        "description": "Stock Span Problem 1587115621 - A standard problem in Stacks. (Difficulty: Medium)",
+        "title": "Stock Span Problem 1587115621"
+      },
+      {
+        "year": "2023",
+        "link": "https://www.geeksforgeeks.org/problems/first-non-repeating-character-in-a-stream1216/1",
+        "difficulty": "Medium",
+        "topic": "Queue / Hashing",
+        "description": "First Non Repeating Character In A Stream1216 - A standard problem in Queue / Hashing. (Difficulty: Medium)",
+        "title": "First Non Repeating Character In A Stream1216"
+      },
+      {
+        "year": "2023",
+        "link": "https://www.geeksforgeeks.org/problems/decode-the-string2444/1",
+        "difficulty": "Medium",
+        "topic": "Stacks",
+        "description": "Decode The String2444 - A standard problem in Stacks. (Difficulty: Medium)",
+        "title": "Decode The String2444"
+      },
+      {
+        "year": "2023",
+        "link": "https://www.geeksforgeeks.org/problems/print-matrix-in-zig-zag-fashion--122748/1",
+        "difficulty": "Easy",
+        "topic": "Matrix",
+        "description": "Print Matrix In Zig Zag Fashion  122748 - A standard problem in Matrix. (Difficulty: Easy)",
+        "title": "Print Matrix In Zig Zag Fashion  122748"
+      },
+      {
+        "year": "2023",
+        "link": "https://leetcode.com/problems/reverse-words-in-a-string/description/",
+        "difficulty": "Medium",
+        "topic": "String",
+        "description": "Reverse Words In A String - A standard problem in String. (Difficulty: Medium)",
+        "title": "Reverse Words In A String"
+      },
+      {
+        "year": "2023",
+        "link": "https://www.geeksforgeeks.org/problems/distance-of-nearest-cell-having-1-1587115620/1",
+        "difficulty": "Medium",
+        "topic": "BFS / Matrix",
+        "description": "Distance Of Nearest Cell Having 1 1587115620 - A standard problem in BFS / Matrix. (Difficulty: Medium)",
+        "title": "Distance Of Nearest Cell Having 1 1587115620"
+      },
+      {
+        "year": "2024",
+        "link": "https://leetcode.com/problems/word-search/description/",
+        "difficulty": "Medium",
+        "topic": "Backtracking",
+        "description": "Word Search - A standard problem in Backtracking. (Difficulty: Medium)",
+        "title": "Word Search"
+      },
+      {
+        "year": "2024",
+        "link": "https://leetcode.com/problems/find-median-from-data-stream/description/",
+        "difficulty": "Hard",
+        "topic": "Priority Queue",
+        "description": "Find Median From Data Stream - A standard problem in Priority Queue. (Difficulty: Hard)",
+        "title": "Find Median From Data Stream"
+      },
+      {
+        "year": "2024",
+        "link": "https://leetcode.com/problems/valid-parentheses/",
+        "difficulty": "Easy",
+        "topic": "Stacks",
+        "description": "Valid Parentheses - A standard problem in Stacks. (Difficulty: Easy)",
+        "title": "Valid Parentheses"
+      },
+      {
+        "year": "2024",
+        "link": "https://leetcode.com/problems/longest-valid-parentheses/description/",
+        "difficulty": "Hard",
+        "topic": "Stacks",
+        "description": "Longest Valid Parentheses - A standard problem in Stacks. (Difficulty: Hard)",
+        "title": "Longest Valid Parentheses"
+      },
+      {
+        "year": "2024",
+        "link": "https://leetcode.com/problems/minimum-remove-to-make-valid-parentheses/description/",
+        "difficulty": "Medium",
+        "topic": "Stacks",
+        "description": "Minimum Remove To Make Valid Parentheses - A standard problem in Stacks. (Difficulty: Medium)",
+        "title": "Minimum Remove To Make Valid Parentheses"
+      },
+      {
+        "year": "2024",
+        "link": "https://www.geeksforgeeks.org/connect-leaves-doubly-linked-list/",
+        "difficulty": "Medium",
+        "topic": "Tree / Linked List",
+        "description": "Connect Leaves Doubly Linked List - A standard problem in Tree / Linked List. (Difficulty: Medium)",
+        "title": "Connect Leaves Doubly Linked List"
+      },
+      {
+        "year": "2024",
+        "link": "https://leetcode.com/problems/spiral-matrix/description/",
+        "difficulty": "Medium",
+        "topic": "Matrix",
+        "description": "Spiral Matrix - A standard problem in Matrix. (Difficulty: Medium)",
+        "title": "Spiral Matrix"
+      },
+      {
+        "year": "2024",
+        "link": "https://leetcode.com/problems/shortest-path-in-a-grid-with-obstacles-elimination/description/",
+        "difficulty": "Hard",
+        "topic": "Graph",
+        "description": "Shortest Path In A Grid With Obstacles Elimination - A standard problem in Graph. (Difficulty: Hard)",
+        "title": "Shortest Path In A Grid With Obstacles Elimination"
+      },
+      {
+        "year": "2024",
+        "link": "https://leetcode.com/problems/permutations-ii/description/",
+        "difficulty": "Medium",
+        "topic": "Backtracking",
+        "description": "Permutations Ii - A standard problem in Backtracking. (Difficulty: Medium)",
+        "title": "Permutations Ii"
+      },
+      {
+        "year": "2024",
+        "link": "https://www.geeksforgeeks.org/print-subsequences-string/",
+        "difficulty": "Easy",
+        "topic": "Recursion",
+        "description": "Print Subsequences String - A standard problem in Recursion. (Difficulty: Easy)",
+        "title": "Print Subsequences String"
+      },
+      {
+        "year": "2024",
+        "link": "https://leetcode.com/problems/gas-station/description/",
+        "difficulty": "Medium",
+        "topic": "Greedy",
+        "description": "Gas Station - A standard problem in Greedy. (Difficulty: Medium)",
+        "title": "Gas Station"
+      },
+      {
+        "year": "2024",
+        "link": "https://www.geeksforgeeks.org/problems/sorting-elements-of-an-array-by-frequency-1587115621/1",
+        "difficulty": "Medium",
+        "topic": "Hashing / Sorting",
+        "description": "Sorting Elements Of An Array By Frequency 1587115621 - A standard problem in Hashing / Sorting. (Difficulty: Medium)",
+        "title": "Sorting Elements Of An Array By Frequency 1587115621"
+      },
+      {
+        "year": "2024",
+        "link": "http://geeksforgeeks.org/problems/phone-directory4628/1",
+        "difficulty": "Hard",
+        "topic": "Trie",
+        "description": "Phone Directory4628 - A standard problem in Trie. (Difficulty: Hard)",
+        "title": "Phone Directory4628"
+      },
+      {
+        "year": "2024",
+        "link": "https://www.geeksforgeeks.org/connect-leaves-doubly-linked-list/",
+        "difficulty": "Medium",
+        "topic": "Tree / Linked List",
+        "description": "Connect Leaves Doubly Linked List - A standard problem in Tree / Linked List. (Difficulty: Medium)",
+        "title": "Connect Leaves Doubly Linked List"
+      },
+      {
+        "year": "2024",
+        "link": "https://www.hackerearth.com/problem/algorithm/coin-group-8/",
+        "difficulty": "Easy",
+        "topic": "DP",
+        "description": "Coin Group 8 - A standard problem in DP. (Difficulty: Easy)",
+        "title": "Coin Group 8"
+      },
+      {
+        "year": "2024",
+        "link": "https://www.geeksforgeeks.org/problems/add-two-numbers-represented-by-linked-lists/1",
+        "difficulty": "Medium",
+        "topic": "Linked List",
+        "description": "Add Two Numbers Represented By Linked Lists - A standard problem in Linked List. (Difficulty: Medium)",
+        "title": "Add Two Numbers Represented By Linked Lists"
+      },
+      {
+        "year": "2024",
+        "link": "https://leetcode.com/problems/validate-binary-search-tree/description/",
+        "difficulty": "Medium",
+        "topic": "BST",
+        "description": "Validate Binary Search Tree - A standard problem in BST. (Difficulty: Medium)",
+        "title": "Validate Binary Search Tree"
+      },
+      {
+        "year": "2024",
+        "link": "https://www.geeksforgeeks.org/remove-characters-from-the-first-string-which-are-present-in-the-second-string/",
+        "difficulty": "Easy",
+        "topic": "Hashing / String",
+        "description": "Remove Characters From The First String Which Are Present In The Second String - A standard problem in Hashing / String. (Difficulty: Easy)",
+        "title": "Remove Characters From The First String Which Are Present In The Second String"
+      },
+      {
+        "year": "2024",
+        "link": "https://www.geeksforgeeks.org/reverse-alternate-k-nodes-in-a-singly-linked-list/",
+        "difficulty": "Medium",
+        "topic": "Linked List",
+        "description": "Reverse Alternate K Nodes In A Singly Linked List - A standard problem in Linked List. (Difficulty: Medium)",
+        "title": "Reverse Alternate K Nodes In A Singly Linked List"
+      },
+      {
+        "year": "2024",
+        "link": "https://www.geeksforgeeks.org/remove-duplicates-from-a-given-string/",
+        "difficulty": "Easy",
+        "topic": "Hashing / String",
+        "description": "Remove Duplicates From A Given String - A standard problem in Hashing / String. (Difficulty: Easy)",
+        "title": "Remove Duplicates From A Given String"
+      },
+      {
+        "year": "2024",
+        "link": "https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/description/",
+        "difficulty": "Easy",
+        "topic": "BST",
+        "description": "Lowest Common Ancestor Of A Binary Search Tree - A standard problem in BST. (Difficulty: Easy)",
+        "title": "Lowest Common Ancestor Of A Binary Search Tree"
+      },
+      {
+        "year": "2024",
+        "link": "https://leetcode.com/problems/merge-intervals/description/",
+        "difficulty": "Medium",
+        "topic": "Greedy / Intervals",
+        "description": "Merge Intervals - A standard problem in Greedy / Intervals. (Difficulty: Medium)",
+        "title": "Merge Intervals"
+      },
+      {
+        "year": "2024",
+        "link": "https://www.geeksforgeeks.org/the-celebrity-problem/",
+        "difficulty": "Medium",
+        "topic": "Graph / Stack",
+        "description": "The Celebrity Problem - A standard problem in Graph / Stack. (Difficulty: Medium)",
+        "title": "The Celebrity Problem"
+      },
+      {
+        "year": "2024",
+        "link": "https://www.geeksforgeeks.org/introduction-and-array-implementation-of-queue/",
+        "difficulty": "Easy",
+        "topic": "Queue",
+        "description": "Introduction And Array Implementation Of Queue - A standard problem in Queue. (Difficulty: Easy)",
+        "title": "Introduction And Array Implementation Of Queue"
+      },
+      {
+        "year": "2024",
+        "link": "https://leetcode.com/problems/power-of-two/description/",
+        "difficulty": "Easy",
+        "topic": "Bit Manipulation",
+        "description": "Power Of Two - A standard problem in Bit Manipulation. (Difficulty: Easy)",
+        "title": "Power Of Two"
+      },
+      {
+        "year": "2024",
+        "link": "https://www.geeksforgeeks.org/how-to-create-a-dictionary-in-cpp/",
+        "difficulty": "Easy",
+        "topic": "STL / HashMap",
+        "description": "How To Create A Dictionary In Cpp - A standard problem in STL / HashMap. (Difficulty: Easy)",
+        "title": "How To Create A Dictionary In Cpp"
+      }
+    ],
+    "oops": [
+      { "year": "2024", "link": "What is the best possible time complexity for a given algorithm?",  "difficulty": "Medium" },
+      { "year": "2024", "link": "What is the best possible space complexity achievable?" ,  "difficulty": "Medium"},
+      { "year": "2024", "link": "What are abstract classes and interfaces? Which one offers more abstraction?" ,  "difficulty": "Medium"},
+      { "year": "2024", "link": "How can multiple inheritance be implemented in Java and C++?",  "difficulty": "Medium" },
+      { "year": "2024", "link": "What is inheritance upcasting and downcasting in Java?",  "difficulty": "Easy" }
+    ],
+    "os": [
+      { "year": "2021", "link": "What are deadlocks and how can they be prevented in an operating system?",  "difficulty": "Medium" },
+      { "year": "2021", "link": "What is the difference between a mutex and a semaphore?",  "difficulty": "Medium" },
+      { "year": "2022", "link": "What is Belady’s Anomaly? Explain it with an example.",  "difficulty": "Medium" },
+      { "year": "2024", "link": "How can a large file (e.g., a video or movie) be sent over the Internet?",  "difficulty": "Easy"},
+      { "year": "2024", "link": "What is the difference between the Linux and Windows operating systems or kernels?",  "difficulty": "Medium"},
+      { "year": "2024", "link": "What is the difference between a process and a thread?",  "difficulty": "Easy" },
+      { "year": "2024", "link": "What are the key properties of distributed systems?",  "difficulty": "Medium" }
+    ],
+    "dbms": [
+      { "year": "2022", "link": "What is Boyce-Codd Normal Form (BCNF)? How is it different from Third Normal Form (3NF)? Provide an example.",  "difficulty": "Medium"}
+    ],
+    "system_design": [
+      { "year": "2020", "link": "How would you design a URL shortener like TinyURL?",  "difficulty": "Medium" },
+      { "year": "2022", "link": "Explain the Singleton design pattern and provide a use case.",  "difficulty": "Easy" },
+      { "year": "2022", "link": "Explain the Builder design pattern with a real-world analogy.",  "difficulty": "Easy" },
+      { "year": "2022", "link": "Design a system for managing employee work approvals.",  "difficulty": "Medium" },
+      { "year": "2022", "link": "How would you integrate a service with AWS or Azure? What are the key considerations?",  "difficulty": "Medium" },
+      { "year": "2022", "link": "Design a messaging application similar to WhatsApp. What should be the structure of the database/data structures/tables? What core functionalities would you prioritize? What would be your top 5 test cases to validate this application?",  "difficulty": "Hard" },
+      { "year": "2024", "link": "Design a scalable voting system for 100 million users, considering global distribution and user categories such as NRIs and Indian residents.",  "difficulty": "Hard" },
+      { "year": "2024", "link": "Design a multiplayer tic-tac-toe game for smartphones.", "difficulty": "Medium" },
+      { "year": "2024", "link": "Design a vending machine that is accessible to blind and deaf users.", "difficulty": "Medium" }
+    ],
+    "Behavioral": [
+      "Why Microsoft?",
+      "Tell me about yourself",
+      "Why are you interested in this role?",
+      "What’s your favorite Microsoft product? What are its advantages and disadvantages, and how would you improve it?",
+      "How open are you to new ideas?",
+      "Describe a time you learned from a mistake.",
+      "Describe a time you were wrong and how you handled it.",
+      "Tell me about a time you helped a teammate approach a problem in a new way.",
+      "What has been your biggest accomplishment so far?",
+      "Can you describe your long-term career goals?",
+      "How do you handle competing priorities?",
+      "What are your strengths?",
+      "Tell us something unique about yourself and elaborate on your hobbies.",
+      "What are some trending technologies you’re excited about?"
+    ]
+  }
+}
+]
