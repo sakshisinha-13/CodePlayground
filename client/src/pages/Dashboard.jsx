@@ -7,7 +7,7 @@ import { exportToPDFmake } from '../exports/exportPDFmake';
 import SimpleTableView from '../exports/SimpleTableView';
 import QuestionList from '../components/QuestionList';
 import { useRef } from "react";
-
+import Navbar from "../components/Navbar";
 import {
   Chart as ChartJS,
   ArcElement,
@@ -209,6 +209,7 @@ const getFilteredQuestions = () => {
 
   return (
     <div className={`min-h-screen px-6 py-6 ${darkMode ? 'bg-gray-900 text-white' : 'bg-gray-200 text-black'}`}>
+      <Navbar darkMode={darkMode} setDarkMode={setDarkMode}/>
       <div className="w-full mx-auto space-y-8">
 
         {/* Search Section */}

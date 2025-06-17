@@ -34,13 +34,13 @@ exports.signup = async (req, res) => {
     res.status(201).json({ user, token });
 
   } catch (err) {
-    if (err.code === 11000) {
-      return res.status(400).json({ message: "Duplicate field error" });
-    }
-
-    console.error("❌ SIGNUP ERROR:", err.message);
-    res.status(500).json({ message: "Internal Server Error" });
+  if (err.code === 11000) {
+    return res.status(400).json({ message: "Duplicate field error" });
   }
+
+  console.error("❌ SIGNUP ERROR (FULL):", err);  // ✅ This logs full error object
+  res.status(500).json({ message: "Internal Server Error" });
+}
 };
 
 
