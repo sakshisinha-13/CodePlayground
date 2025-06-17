@@ -1,54 +1,60 @@
-// src/pages/Playground.jsx
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import AceEditor from "react-ace";
 import axios from "axios";
 
-// ACE Config
+// ACE config
+import "ace-builds/src-noconflict/ace";
+import "ace-builds/src-noconflict/ext-language_tools";
 import "ace-builds/src-noconflict/mode-javascript";
 import "ace-builds/src-noconflict/mode-python";
 import "ace-builds/src-noconflict/mode-c_cpp";
 import "ace-builds/src-noconflict/theme-monokai";
-import "ace-builds/src-noconflict/ext-language_tools";
-import * as ace from "ace-builds";
+
+const defaultCodeMap = {
+  javascript: `function greet(name) {
+  return "Hello, " + name + "!";
+}
+console.log(greet("World"));`,
+
+  python: `def greet(name):
+    return "Hello, " + name + "!"
+
+print(greet("World"))`,
+
+  c_cpp: `#include <iostream>
+using namespace std;
+
+int main() {
+    cout << "Hello, World!" << endl;
+    return 0;
+}`
+};
+
+const difficultyBadge = {
+  Easy: "bg-green-100 text-green-800",
+  Medium: "bg-yellow-100 text-yellow-800",
+  Hard: "bg-red-100 text-red-700",
+};
 
 const Playground = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
 
-  const [code, setCode] = useState(`function greet(name) {
-  return "Hello, " + name + "!";
-}
-console.log(greet("World"));`);
+  const [code, setCode] = useState(defaultCodeMap["javascript"]);
   const [language, setLanguage] = useState("javascript");
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // ✅ Safe ACE config inside useEffect
   useEffect(() => {
-    try {
-      ace.config.set("basePath", "https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12");
-      ace.config.setModuleUrl(
-        "ace/mode/javascript_worker",
-        "https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/worker-javascript.js"
-      );
-    } catch (err) {
-      console.error("ACE config error:", err);
-    }
-  }, []);
-
-  // ✅ Redirect if no question is selected
-  useEffect(() => {
-    if (!state || !state.title) {
-      navigate("/dashboard");
-    }
+    if (!state || !state.title) navigate("/dashboard");
   }, [state, navigate]);
 
   const runCode = async () => {
+    setLoading(true);
     try {
-      setLoading(true);
-      const res = await axios.post("https://codeexecutor-production.up.railway.app/execute", {
+      const res = await axios.post("/api/execute", {
         language,
         code,
         input,
@@ -64,69 +70,102 @@ console.log(greet("World"));`);
   if (!state) return null;
 
   return (
-    <div className="min-h-screen px-6 py-4 bg-gray-100 dark:bg-gray-900 dark:text-white">
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold mb-2">{state.title}</h1>
-        <p className="text-sm text-gray-700 dark:text-gray-300 whitespace-pre-wrap">
-          {state.description}
-        </p>
-        <p className="mt-1 text-xs text-gray-500">
-          {state.difficulty} | {state.topic || "N/A"}
-        </p>
-      </div>
-
-      <div className="mb-4">
-        <label className="block mb-1">Language</label>
-        <select
-          className="p-2 border rounded dark:bg-gray-800 dark:border-gray-600"
-          value={language}
-          onChange={(e) => setLanguage(e.target.value)}
+    <div className="min-h-screen flex flex-col md:flex-row bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white">
+      {/* LEFT PANEL */}
+      <div className="md:w-1/2 p-6 border-b md:border-b-0 md:border-r border-gray-300 dark:border-gray-700">
+        <button
+          className="mb-4 px-3 py-1 bg-gray-200 dark:bg-gray-700 text-sm rounded hover:bg-gray-300 dark:hover:bg-gray-600"
+          onClick={() => navigate("/dashboard")}
         >
-          <option value="javascript">JavaScript</option>
-          <option value="python">Python</option>
-          <option value="c_cpp">C++</option>
-        </select>
+          ← Back to Dashboard
+        </button>
+
+        <h1 className="text-2xl font-bold text-blue-700 dark:text-blue-300">{state.title}</h1>
+
+        <div className="flex gap-2 mt-2">
+          <span className="px-2 py-1 text-xs rounded bg-gray-200 dark:bg-gray-700">{state.topic}</span>
+          <span className={`px-2 py-1 text-xs rounded ${difficultyBadge[state.difficulty] || "bg-gray-300"}`}>
+            {state.difficulty}
+          </span>
+          <span className="px-2 py-1 text-xs rounded bg-blue-100 text-blue-800">{state.year}</span>
+        </div>
+
+        <div className="mt-4">
+          <h2 className="text-md font-semibold mb-1">📝 Description:</h2>
+          <p className="whitespace-pre-wrap text-sm text-gray-800 dark:text-gray-200">
+            {state.description}
+          </p>
+        </div>
+
+        <div className="mt-4">
+          <h2 className="text-md font-semibold mb-1">Instructions:</h2>
+          <ul className="list-disc list-inside text-gray-700 dark:text-gray-300 text-sm">
+            <li>Write your code in the editor.</li>
+            <li>You can provide custom input (stdin).</li>
+            <li>Click “Run Code” to see the output.</li>
+          </ul>
+        </div>
       </div>
 
-      <AceEditor
-        mode={language}
-        theme="monokai"
-        value={code}
-        onChange={setCode}
-        name="code-editor"
-        fontSize={14}
-        width="100%"
-        height="300px"
-        setOptions={{
-          enableBasicAutocompletion: true,
-          enableLiveAutocompletion: true,
-          enableSnippets: true,
-        }}
-      />
+      {/* RIGHT PANEL */}
+      <div className="md:w-1/2 p-6 flex flex-col gap-4">
+        <div className="flex gap-4 items-center">
+          <label className="font-medium">Language:</label>
+          <select
+            className="p-2 border rounded dark:bg-gray-800 dark:border-gray-600"
+            value={language}
+            onChange={(e) => {
+              const lang = e.target.value;
+              setLanguage(lang);
+              setCode(defaultCodeMap[lang]);
+            }}
+          >
+            <option value="javascript">JavaScript</option>
+            <option value="python">Python</option>
+            <option value="c_cpp">C++</option>
+          </select>
+        </div>
 
-      <div className="mt-4">
-        <label className="block mb-1">Custom Input</label>
-        <textarea
-          className="w-full p-2 border rounded dark:bg-gray-800 dark:border-gray-600"
-          rows="3"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-        ></textarea>
-      </div>
+        <AceEditor
+          mode={language}
+          theme="monokai"
+          value={code}
+          onChange={setCode}
+          name="code-editor"
+          width="100%"
+          height="300px"
+          setOptions={{
+            enableBasicAutocompletion: true,
+            enableLiveAutocompletion: true,
+            enableSnippets: true,
+            useWorker: false,
+          }}
+        />
 
-      <button
-        className="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50"
-        onClick={runCode}
-        disabled={loading}
-      >
-        {loading ? "Running..." : "Run Code"}
-      </button>
+        <div>
+          <label className="block text-sm font-medium mb-1">Custom Input (stdin):</label>
+          <textarea
+            className="w-full p-2 border rounded dark:bg-gray-800 dark:border-gray-600"
+            rows={3}
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+          />
+        </div>
 
-      <div className="mt-4">
-        <label className="block mb-1">Output</label>
-        <pre className="w-full p-2 bg-gray-200 dark:bg-gray-800 rounded overflow-x-auto whitespace-pre-wrap">
-          {output}
-        </pre>
+        <button
+          className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50"
+          onClick={runCode}
+          disabled={loading}
+        >
+          {loading ? "Running…" : "Run Code"}
+        </button>
+
+        <div>
+          <label className="block text-sm font-medium mb-1">Output:</label>
+          <pre className="w-full p-2 bg-gray-200 dark:bg-gray-800 rounded overflow-x-auto whitespace-pre-wrap">
+            {output}
+          </pre>
+        </div>
       </div>
     </div>
   );
