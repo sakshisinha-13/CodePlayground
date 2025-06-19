@@ -7,42 +7,49 @@ require("dotenv").config();
 
 const sampleProblems = [
   {
-    "title": "Two Sum",
-    "description": "Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.\n\nYou may assume that each input would have exactly one solution, and you may not use the same element twice.\n\nYou can return the answer in any order.",
-    "inputFormat": "nums = [2,7,11,15], target = 9",
-    "outputFormat": "Output: [0,1]",
-    "constraints": "2 <= nums.length <= 10^4\n-10^9 <= nums[i] <= 10^9\n-10^9 <= target <= 10^9\nOnly one valid answer exists.",
-    "examples": [
-      {
-        "input": "nums = [3,2,4], target = 6",
-        "output": "[1,2]"
-      },
-      {
-        "input": "nums = [3,3], target = 6",
-        "output": "[0,1]"
-      }
-    ],
-    "testCases": [
-      {
-        "input": "[2,7,11,15], 9",
-        "expectedOutput": "[0,1]"
-      },
-      {
-        "input": "[3,2,4], 6",
-        "expectedOutput": "[1,2]"
-      },
-      {
-        "input": "[3,3], 6",
-        "expectedOutput": "[0,1]"
-      }
-    ],
-    "difficulty": "Easy",
-    "topic": "dsa",
-    "type": "Interview",
-    "company": "Microsoft",
-    "role": "Software Engineer",
-    "yoe": "College Graduate"
-  },
+  title: "Two Sum",
+  description: `Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.
+
+You may assume that each input would have exactly one solution, and you may not use the same element twice.
+
+You can return the answer in any order.`,
+  inputFormat: "nums = [2,7,11,15], target = 9",
+  outputFormat: "Output: [0,1]",
+  constraints: `2 <= nums.length <= 10^4
+-10^9 <= nums[i] <= 10^9
+-10^9 <= target <= 10^9
+Only one valid answer exists.`,
+  examples: [
+    {
+      input: "3\n3 2 4\n6",
+      output: "[1,2]"
+    },
+    {
+      input: "2\n3 3\n6",
+      output: "[0,1]"
+    }
+  ],
+  testCases: [
+    {
+      input: "4\n2 7 11 15\n9",
+      expectedOutput: "[0,1]"
+    },
+    {
+      input: "3\n3 2 4\n6",
+      expectedOutput: "[1,2]"
+    },
+    {
+      input: "2\n3 3\n6",
+      expectedOutput: "[0,1]"
+    }
+  ],
+  difficulty: "Easy",
+  topic: "dsa",
+  type: "Interview",
+  company: "Microsoft",
+  role: "Software Engineer",
+  yoe: "College Graduate"
+},
   {
     title: "Word Ladder",
     description: "Given two words, beginWord and endWord, and a dictionary wordList, return the number of words in the shortest transformation sequence from beginWord to endWord, or 0 if no such sequence exists.",

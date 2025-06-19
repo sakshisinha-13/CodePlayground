@@ -40,7 +40,7 @@ const Playground = () => {
   const [code, setCode] = useState(defaultCodeMap["javascript"]);
   const [language, setLanguage] = useState("javascript");
   const [input, setInput] = useState("");
-  const [output, setOutput] = useState("");
+  const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -57,26 +57,23 @@ const runCode = async () => {
     const rawExamples = state.testCases || state.examples || [];
     const testCases = rawExamples.map((ex) => ({
       input: ex.input,
-      expectedOutput: ex.output
+      expectedOutput: ex.output,
     }));
 
     const res = await axios.post("/api/execute", {
       language,
       code,
-      testCases
+      testCases,
     });
 
-    if (Array.isArray(res.data.output)) {
-      setOutput(res.data.output);
-    } else {
-      setOutput("Error: " + res.data.output);
-    }
+    setResults(res.data); // ✅ directly assign array
   } catch (err) {
-    setOutput("Error: " + err.message);
+    setResults([{ status: "Error", actualOutput: err.message }]);
   } finally {
     setLoading(false);
   }
 };
+
 
 
   if (!state) return null;
@@ -184,23 +181,20 @@ const runCode = async () => {
           }}
         />
 
-        {Array.isArray(output) ? (
-          <div className="bg-gray-800 p-4 rounded-md text-sm space-y-3 max-h-[300px] overflow-y-auto">
-            <h3 className="font-bold text-lg">Test Case Results:</h3>
-            {output.map((res, idx) => (
-              <div key={idx} className={`p-2 rounded ${res.passed ? 'bg-green-800' : 'bg-red-900'}`}>
-                <p><strong>Input:</strong> {res.input}</p>
-                <p><strong>Expected:</strong> {res.expected}</p>
-                <p><strong>Actual:</strong> {res.actual}</p>
-                <p><strong>Status:</strong> {res.passed ? '✅ Passed' : '❌ Failed'}</p>
-              </div>
-            ))}
-          </div>
-        ) : output && (
-          <div className="bg-red-800 p-4 rounded-md text-sm">
-            <strong>{output}</strong>
-          </div>
-        )}
+        {results.length > 0 && (
+  <div className="bg-gray-800 p-4 rounded-md text-sm space-y-3 max-h-[300px] overflow-y-auto">
+    <h3 className="font-bold text-lg">Test Case Results:</h3>
+    {results.map((res, idx) => (
+      <div key={idx} className={`p-2 rounded ${res.status?.includes("Accepted") ? 'bg-green-800' : 'bg-red-900'}`}>
+        <p><strong>Input:</strong> {res.input}</p>
+        <p><strong>Expected:</strong> {res.expectedOutput}</p>
+        <p><strong>Actual:</strong> {res.actualOutput}</p>
+        <p><strong>Status:</strong> {res.status}</p>
+      </div>
+    ))}
+  </div>
+)}
+
       </div>
     </div>
   );
