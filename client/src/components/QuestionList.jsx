@@ -3,6 +3,7 @@
 // Displays a list of filtered questions in a card-style layout.
 // - Clickable cards navigate to the Playground page with question details.
 // - Each question can be ticked/unticked using a checkbox.
+// - Shows status badges like "Solved" / "Unsolved".
 // -----------------------------------------------------------------------------
 
 import React from "react";
@@ -13,17 +14,35 @@ export default function QuestionList({ filteredQuestions = [], tickedQuestions =
 
   // 🚀 Navigate to Playground with question data
   const handleClick = (q, index) => {
-    const title = q.title || `Question ${index + 1}`;
-    const description = q.description || `${q.topic || "General"} (${q.difficulty || "Unknown"})`;
-    const difficulty = q.difficulty || "Unknown";
-    const topic = q.topic || "N/A";
-    const year = q.year || "N/A";
-    const type = q.type || "Interview";
+  const title = q.title || `Question ${index + 1}`;
+  const description = q.description || "";
+  const difficulty = q.difficulty || "Unknown";
+  const topic = q.topic || "N/A";
+  const year = q.year || "N/A";
+  const type = q.type || "Interview";
+  const inputFormat = q.inputFormat || "N/A";
+  const outputFormat = q.outputFormat || "N/A";
+  const testCases = q.testCases || [];
 
-    navigate(`/playground/${encodeURIComponent(title)}`, {
-      state: { title, description, difficulty, topic, year, type },
-    });
-  };
+ navigate(`/playground/${encodeURIComponent(title)}`, {
+  state: {
+    title: q.title,
+    description: q.description,
+    inputFormat: q.inputFormat,
+    outputFormat: q.outputFormat,
+    constraints: q.constraints,
+    examples: q.examples,
+    testCases: q.testCases,
+    difficulty: q.difficulty,
+    topic: q.topic,
+    year: q.year,
+    type: q.type,
+    link: q.link
+  }
+});
+
+};
+
 
   // 🔑 Generate a unique key for each question card
   const uniqueKey = (q, index) => `${q.title || index}-${index}`;
@@ -52,12 +71,23 @@ export default function QuestionList({ filteredQuestions = [], tickedQuestions =
               <span className="text-lg font-semibold break-words max-w-[90vw]">
                 {title}
               </span>
-              <input
-                type="checkbox"
-                checked={!!isTicked}
-                onClick={(e) => e.stopPropagation()}
-                onChange={() => toggleTick(q.link)}
-              />
+              <div className="flex items-center gap-2">
+                {/* ✅ Solved/Unsolved badge */}
+                <span
+                  className={`text-xs font-bold px-2 py-1 rounded-full ${isTicked
+                    ? "bg-green-500 text-white"
+                    : "bg-yellow-400 text-black"
+                    }`}
+                >
+                  {isTicked ? "Solved" : "Unsolved"}
+                </span>
+                <input
+                  type="checkbox"
+                  checked={!!isTicked}
+                  onClick={(e) => e.stopPropagation()}
+                  onChange={() => toggleTick(q.link)}
+                />
+              </div>
             </div>
             <p className="text-sm text-gray-600 dark:text-gray-300">Difficulty: {difficulty}</p>
             <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">Topic: {topic}</p>

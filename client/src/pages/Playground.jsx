@@ -1,47 +1,32 @@
-// src/pages/Playground.jsx
-// -----------------------------------------------------------------------------
-// This page renders the code execution environment. It includes:
-// - Problem description on the left (title, difficulty, topic, year)
-// - Code editor on the right with AceEditor
-// - Language selector, stdin input, and run button
-// - Calls backend to execute code and display output
-// -----------------------------------------------------------------------------
-
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import AceEditor from "react-ace";
 import axios from "axios";
 
-// 🔧 ACE Editor configuration
-import "ace-builds/src-noconflict/ace";
-import "ace-builds/src-noconflict/ext-language_tools";
 import "ace-builds/src-noconflict/mode-javascript";
 import "ace-builds/src-noconflict/mode-python";
 import "ace-builds/src-noconflict/mode-c_cpp";
 import "ace-builds/src-noconflict/theme-monokai";
+import "ace-builds/src-noconflict/ext-language_tools";
 
-// 📌 Default template code for each language
+import * as ace from "ace-builds";
+ace.config.set("basePath", "https://cdn.jsdelivr.net/npm/ace-builds@1.4.14/src-noconflict");
+ace.config.setModuleUrl('ace/mode/javascript_worker', 'https://cdn.jsdelivr.net/npm/ace-builds@1.4.14/src-noconflict/worker-javascript.js');
+ace.config.setModuleUrl('ace/mode/python_worker', 'https://cdn.jsdelivr.net/npm/ace-builds@1.4.14/src-noconflict/worker-python.js');
+ace.config.setModuleUrl('ace/mode/c_cpp_worker', 'https://cdn.jsdelivr.net/npm/ace-builds@1.4.14/src-noconflict/worker-c_cpp.js');
+
 const defaultCodeMap = {
-  javascript: `function greet(name) {
-  return "Hello, " + name + "!";
-}
-console.log(greet("World"));`,
-
-  python: `def greet(name):
-    return "Hello, " + name + "!"
-
-print(greet("World"))`,
-
+  javascript: `// Write your code here.`,
+  python: `# Write your code here.`,
   c_cpp: `#include <iostream>
 using namespace std;
 
 int main() {
-    cout << "Hello, World!" << endl;
+    // Write your code here.
     return 0;
 }`
 };
 
-// 🎨 Badge colors based on difficulty level
 const difficultyBadge = {
   Easy: "bg-green-100 text-green-800",
   Medium: "bg-yellow-100 text-yellow-800",
@@ -58,12 +43,15 @@ const Playground = () => {
   const [output, setOutput] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // 🔐 Redirect if opened without question state
   useEffect(() => {
     if (!state || !state.title) navigate("/dashboard");
   }, [state, navigate]);
 
-  // 🚀 Run code via backend API
+  // Update code when language changes
+  useEffect(() => {
+    setCode(defaultCodeMap[language]);
+  }, [language]);
+
   const runCode = async () => {
     setLoading(true);
     try {
@@ -71,8 +59,14 @@ const Playground = () => {
         language,
         code,
         input,
+        testCases: state.testCases || state.examples || [],
       });
-      setOutput(res.data.output);
+
+      if (Array.isArray(res.data.output)) {
+        setOutput(res.data.output);
+      } else {
+        setOutput("Error: " + res.data.output);
+      }
     } catch (err) {
       setOutput("Error: " + err.message);
     } finally {
@@ -80,12 +74,12 @@ const Playground = () => {
     }
   };
 
-  if (!state) return null;    // prevent render if state is missing
+  if (!state) return null;
 
   return (
-    <div className="min-h-screen flex flex-col md:flex-row bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white">
-      {/* LEFT PANEL - Question Description  */}
-      <div className="md:w-1/2 p-6 border-b md:border-b-0 md:border-r border-gray-300 dark:border-gray-700">
+    <div className="min-h-screen flex flex-col md:flex-row bg-gray-50 dark:bg-gray-900">
+      {/* LEFT PANEL */}
+      <div className="md:w-1/2 p-6 overflow-y-auto max-h-screen bg-white dark:bg-gray-900 border-b md:border-b-0 md:border-r border-gray-300 dark:border-gray-700">
         <button
           className="mb-4 px-3 py-1 bg-gray-200 dark:bg-gray-700 text-sm rounded hover:bg-gray-300 dark:hover:bg-gray-600"
           onClick={() => navigate("/dashboard")}
@@ -95,97 +89,113 @@ const Playground = () => {
 
         <h1 className="text-2xl font-bold text-blue-700 dark:text-blue-300">{state.title}</h1>
 
-        <div className="flex gap-2 mt-2">
-          <span className="px-2 py-1 text-xs rounded bg-gray-200 dark:bg-gray-700">{state.topic}</span>
-          <span className={`px-2 py-1 text-xs rounded ${difficultyBadge[state.difficulty] || "bg-gray-300"}`}>
-            {state.difficulty}
-          </span>
-          <span className="px-2 py-1 text-xs rounded bg-blue-100 text-blue-800">{state.year}</span>
+        <div className="flex gap-2 mt-2 text-sm">
+          <span className="px-2 py-1 rounded bg-gray-200 dark:bg-gray-700">{state.topic}</span>
+          <span className={`px-2 py-1 rounded ${difficultyBadge[state.difficulty] || "bg-gray-300"}`}>{state.difficulty}</span>
+          <span className="px-2 py-1 rounded bg-blue-100 text-blue-800">{state.year || "N/A"}</span>
         </div>
 
-        {/* 📄 Description */}
-        <div className="mt-4">
-          <h2 className="text-md font-semibold mb-1">📝 Description:</h2>
-          <p className="whitespace-pre-wrap text-sm text-gray-800 dark:text-gray-200">
-            {state.description}
-          </p>
-        </div>
+        <section className="mt-6 space-y-4 text-sm">
+          <div>
+            <h2 className="font-semibold text-base">Description:</h2>
+            <div className="bg-gray-100 dark:bg-gray-800 p-4 rounded whitespace-pre-wrap">{state.description}</div>
+          </div>
 
-        {/* 💡 Instructions */}
-        <div className="mt-4">
-          <h2 className="text-md font-semibold mb-1">Instructions:</h2>
-          <ul className="list-disc list-inside text-gray-700 dark:text-gray-300 text-sm">
-            <li>Write your code in the editor.</li>
-            <li>You can provide custom input (stdin).</li>
-            <li>Click “Run Code” to see the output.</li>
-          </ul>
-        </div>
+          {state.inputFormat && (
+            <div>
+              <h2 className="font-semibold text-base">Input Format:</h2>
+              <div className="bg-gray-100 dark:bg-gray-800 p-3 rounded">{state.inputFormat}</div>
+            </div>
+          )}
+
+          {state.outputFormat && (
+            <div>
+              <h2 className="font-semibold text-base">Output Format:</h2>
+              <div className="bg-gray-100 dark:bg-gray-800 p-3 rounded">{state.outputFormat}</div>
+            </div>
+          )}
+
+          {state.constraints && (
+            <div>
+              <h2 className="font-semibold text-base">Constraints:</h2>
+              <div className="bg-gray-100 dark:bg-gray-800 p-3 rounded whitespace-pre-wrap">{state.constraints}</div>
+            </div>
+          )}
+
+          {state.examples?.length > 0 && (
+            <div>
+              <h2 className="font-semibold text-base">Examples:</h2>
+              <ul className="space-y-2">
+                {state.examples.map((ex, idx) => (
+                  <li key={idx} className="bg-gray-100 dark:bg-gray-800 p-3 rounded">
+                    <strong>Input:</strong> {ex.input}<br />
+                    <strong>Output:</strong> {ex.output}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </section>
       </div>
 
-      {/* RIGHT PANEL - Code Editor & Output */}
-      <div className="md:w-1/2 p-6 flex flex-col gap-4">
-        {/* Language Selector */}
-        <div className="flex gap-4 items-center">
-          <label className="font-medium">Language:</label>
+      {/* RIGHT PANEL */}
+      <div className="lg:w-1/2 w-full bg-gray-900 text-white rounded-md p-4 space-y-4">
+        <div className="flex items-center justify-between">
           <select
-            className="p-2 border rounded dark:bg-gray-800 dark:border-gray-600"
             value={language}
-            onChange={(e) => {
-              const lang = e.target.value;
-              setLanguage(lang);
-              setCode(defaultCodeMap[lang]);
-            }}
+            onChange={(e) => setLanguage(e.target.value)}
+            className="bg-gray-800 text-white p-2 rounded-md"
           >
             <option value="javascript">JavaScript</option>
             <option value="python">Python</option>
             <option value="c_cpp">C++</option>
           </select>
+          <button
+            onClick={runCode}
+            className="bg-green-600 hover:bg-green-700 px-4 py-2 rounded-md font-semibold"
+          >
+            Run Code
+          </button>
         </div>
 
-        {/* Ace Code Editor */}
         <AceEditor
           mode={language}
           theme="monokai"
           value={code}
-          onChange={setCode}
-          name="code-editor"
+          onChange={(newCode) => setCode(newCode)}
+          name="codeEditor"
+          fontSize={16}
           width="100%"
           height="300px"
+          showPrintMargin={false}
+          showGutter={true}
+          highlightActiveLine={true}
           setOptions={{
             enableBasicAutocompletion: true,
             enableLiveAutocompletion: true,
             enableSnippets: true,
-            useWorker: false,
+            showLineNumbers: true,
+            tabSize: 2,
           }}
         />
 
-        {/* Input box */}
-        <div>
-          <label className="block text-sm font-medium mb-1">Custom Input (stdin):</label>
-          <textarea
-            className="w-full p-2 border rounded dark:bg-gray-800 dark:border-gray-600"
-            rows={3}
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-          />
-        </div>
-
-        {/* Run Button */}
-        <button
-          className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50"
-          onClick={runCode}
-          disabled={loading}
-        >
-          {loading ? "Running…" : "Run Code"}
-        </button>
-
-        {/* Output box */}
-        <div>
-          <label className="block text-sm font-medium mb-1">Output:</label>
-          <pre className="w-full p-2 bg-gray-200 dark:bg-gray-800 rounded overflow-x-auto whitespace-pre-wrap">
-            {output}
-          </pre>
-        </div>
+        {Array.isArray(output) ? (
+          <div className="bg-gray-800 p-4 rounded-md text-sm space-y-3 max-h-[300px] overflow-y-auto">
+            <h3 className="font-bold text-lg">Test Case Results:</h3>
+            {output.map((res, idx) => (
+              <div key={idx} className={`p-2 rounded ${res.passed ? 'bg-green-800' : 'bg-red-900'}`}>
+                <p><strong>Input:</strong> {res.input}</p>
+                <p><strong>Expected:</strong> {res.expected}</p>
+                <p><strong>Actual:</strong> {res.actual}</p>
+                <p><strong>Status:</strong> {res.passed ? '✅ Passed' : '❌ Failed'}</p>
+              </div>
+            ))}
+          </div>
+        ) : output && (
+          <div className="bg-red-800 p-4 rounded-md text-sm">
+            <strong>{output}</strong>
+          </div>
+        )}
       </div>
     </div>
   );

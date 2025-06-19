@@ -1,4 +1,1 @@
-function greet(name) {
-  return "Hello, " + name + "!";
-}
-console.log(greet("World"));
+// Write your code here.

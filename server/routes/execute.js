@@ -1,103 +1,72 @@
 // server/routes/execute.js
-// -----------------------------------------------------------------------------
-// POST /api/execute
-// Dynamically compiles and runs code for supported languages:
-// - JavaScript (Node.js)
-// - Python
-// - C++ (via g++)
-// Accepts optional stdin and returns the stdout or errors
-// -----------------------------------------------------------------------------
-
 const express = require("express");
 const router = express.Router();
 const fs = require("fs");
 const path = require("path");
 const { exec } = require("child_process");
 
+const isWindows = process.platform === "win32";
 const WORKSPACE = path.join(__dirname, "../temp");
 if (!fs.existsSync(WORKSPACE)) fs.mkdirSync(WORKSPACE);
 
-const isWindows = process.platform === "win32";
-
-// Language configuration
 const LANG_CONFIG = {
   javascript: {
     file: "Main.js",
-    run: "node Main.js",
+    run: "node Main.js"
   },
   python: {
     file: "Main.py",
-    run: isWindows ? "python Main.py" : "python3 Main.py",
+    run: isWindows ? "python Main.py" : "python3 Main.py"
   },
   c_cpp: {
     file: "Main.cpp",
     compile: isWindows ? "g++ Main.cpp -o Main.exe" : "g++ Main.cpp -o Main",
-    run: isWindows ? "Main.exe" : "./Main",
-  },
+    run: isWindows ? "Main.exe" : "./Main"
+  }
 };
 
-router.post("/", (req, res) => {
-  const { language, code, input = "" } = req.body;
+router.post("/", async (req, res) => {
+  const { language, code, testCases = [] } = req.body;
   const cfg = LANG_CONFIG[language];
 
-  if (!cfg) {
-    return res
-      .status(400)
-      .json({ output: `Unsupported language: ${language}` });
-  }
+  if (!cfg) return res.status(400).json({ output: `Unsupported language: ${language}` });
 
   const filePath = path.join(WORKSPACE, cfg.file);
   fs.writeFileSync(filePath, code);
 
-  // Compile (if needed)
   const compile = cfg.compile
     ? new Promise((resolve, reject) => {
-      exec(
-        cfg.compile,
-        { cwd: WORKSPACE, timeout: 5000 },
-        (err, stdout, stderr) =>
-          err ? reject(stderr || err.message) : resolve()
-      );
-    })
+        exec(cfg.compile, { cwd: WORKSPACE }, (err, stdout, stderr) => {
+          if (err) reject(stderr || err.message);
+          else resolve();
+        });
+      })
     : Promise.resolve();
 
-  compile
-    .then(() => {
-      let cmd = cfg.run;
+  try {
+    await compile;
 
-      // Sanitize input for piping
-      const safeInput = input.replace(/"/g, '\\"');
+    const results = await Promise.all(
+      testCases.map(testCase => {
+        return new Promise(resolve => {
+          exec(cfg.run, { cwd: WORKSPACE, input: testCase.input, timeout: 5000 }, (err, stdout, stderr) => {
+            const actual = (err ? stderr || err.message : stdout).trim();
+            const expected = testCase.expectedOutput.trim();
+            resolve({
+              input: testCase.input,
+              expected,
+              actual,
+              passed: actual === expected
+            });
+          });
+        });
+      })
+    );
 
-      // Handle stdin piping cross-platform
-      if (input) {
-        if (language === "python" || language === "javascript") {
-          cmd = isWindows
-            ? `cmd /c "echo ${safeInput} | ${cfg.run}"`
-            : `echo "${safeInput}" | ${cfg.run}`;
-        } else if (language === "c_cpp") {
-          cmd = isWindows
-            ? `echo ${safeInput} | .\\Main.exe`
-            : `echo "${safeInput}" | ./Main`;
-        }
-      } else {
-        if (language === "c_cpp" && isWindows) {
-          cmd = ".\\Main.exe";
-        }
-      }
-
-      // Execute final command
-      exec(
-        cmd,
-        { cwd: WORKSPACE, timeout: 5000 },
-        (err, stdout, stderr) => {
-          if (err) return res.json({ output: stderr || err.message });
-          res.json({ output: stdout });
-        }
-      );
-    })
-    .catch((err) => {
-      res.json({ output: err.toString() });
-    });
+    res.json({ output: results });
+  } catch (err) {
+    res.json({ output: `Compilation or execution failed: ${err.toString()}` });
+  }
 });
 
 module.exports = router;

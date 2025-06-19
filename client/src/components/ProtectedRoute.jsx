@@ -1,17 +1,9 @@
-// src/components/ProtectedRoute.jsx
-// -----------------------------------------------------------------------------
-// Wrapper component to protect routes in the app.
-// - Redirects to /login if user is not authenticated
-// - Otherwise renders the child components
-// -----------------------------------------------------------------------------
-
+import React from "react";
 import { Navigate } from "react-router-dom";
 
-export default function ProtectedRoute({ children }) {
+const ProtectedRoute = ({ children }) => {
+  const isAuthenticated = localStorage.getItem("token");
+  return isAuthenticated ? children : <Navigate to="/login" />;
+};
 
-  // ✅ Check if user is logged in (presence of user in localStorage)
-  const user = localStorage.getItem("codeplayground-user");
-
-  // 🔐 If not logged in, redirect to login page
-  return user ? children : <Navigate to="/login" />;
-}
+export default ProtectedRoute;
