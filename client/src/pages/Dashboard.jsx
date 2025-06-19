@@ -49,7 +49,7 @@ export default function Dashboard() {
   const [assessmentType, setAssessmentType] = useState('');
   const [topic, setTopic] = useState('');
   const [year, setYear] = useState('');
-  // const [difficulty, setDifficulty] = useState('');
+  const [difficulty, setDifficulty] = useState('');
   const [darkMode, setDarkMode] = useState(false);
   const [simpleView, setSimpleView] = useState(false);
   const [noMatch, setNoMatch] = useState(false);
@@ -73,7 +73,7 @@ export default function Dashboard() {
   if (yoe) url.searchParams.append("yoe", yoe);
   if (assessmentType) url.searchParams.append("type", assessmentType);
   if (topic) url.searchParams.append("topic", topic);
-  // if (difficulty) url.searchParams.append("difficulty", difficulty);
+  if (difficulty) url.searchParams.append("difficulty", difficulty);
   if (year) url.searchParams.append("year", year);
 
   console.log("Fetching from:", url.toString());
@@ -170,7 +170,7 @@ const toggleTick = (key) => {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
             <select value={assessmentType} onChange={e => setAssessmentType(e.target.value)} className="p-3 border rounded-md dark:bg-gray-700 text-lg">
               <option value="">Select Round</option>
-              <option value="OA">Online Assessment</option>
+              {/*<option value="OA">Online Assessment</option>*/}
               <option value="Interview">Interview</option>
             </select>
             <select value={topic} onChange={e => setTopic(e.target.value)} className="p-3 border rounded-md dark:bg-gray-700 text-lg">
@@ -185,12 +185,12 @@ const toggleTick = (key) => {
                 <option key={yr} value={yr}>{yr}</option>
               ))}
             </select>
-            {/* <select value={difficulty} onChange={e => setDifficulty(e.target.value)} className="p-3 border rounded-md dark:bg-gray-700 text-lg">
+            <select value={difficulty} onChange={e => setDifficulty(e.target.value)} className="p-3 border rounded-md dark:bg-gray-700 text-lg">
               <option value="">All Levels</option>
               <option value="Easy">Easy</option>
               <option value="Medium">Medium</option>
               <option value="Hard">Hard</option>
-            </select> */}
+            </select> 
           </div>
         </div>
 
