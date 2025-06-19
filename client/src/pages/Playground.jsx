@@ -51,28 +51,33 @@ const Playground = () => {
   useEffect(() => {
     setCode(defaultCodeMap[language]);
   }, [language]);
+const runCode = async () => {
+  setLoading(true);
+  try {
+    const rawExamples = state.testCases || state.examples || [];
+    const testCases = rawExamples.map((ex) => ({
+      input: ex.input,
+      expectedOutput: ex.output
+    }));
 
-  const runCode = async () => {
-    setLoading(true);
-    try {
-      const res = await axios.post("/api/execute", {
-        language,
-        code,
-        input,
-        testCases: state.testCases || state.examples || [],
-      });
+    const res = await axios.post("/api/execute", {
+      language,
+      code,
+      testCases
+    });
 
-      if (Array.isArray(res.data.output)) {
-        setOutput(res.data.output);
-      } else {
-        setOutput("Error: " + res.data.output);
-      }
-    } catch (err) {
-      setOutput("Error: " + err.message);
-    } finally {
-      setLoading(false);
+    if (Array.isArray(res.data.output)) {
+      setOutput(res.data.output);
+    } else {
+      setOutput("Error: " + res.data.output);
     }
-  };
+  } catch (err) {
+    setOutput("Error: " + err.message);
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   if (!state) return null;
 
@@ -81,7 +86,7 @@ const Playground = () => {
       {/* LEFT PANEL */}
       <div className="md:w-1/2 p-6 overflow-y-auto max-h-screen bg-white dark:bg-gray-900 border-b md:border-b-0 md:border-r border-gray-300 dark:border-gray-700">
         <button
-          className="mb-4 px-3 py-1 bg-gray-200 dark:bg-gray-700 text-sm rounded hover:bg-gray-300 dark:hover:bg-gray-600"
+          className="mb-4 px-3 py-1 bg-gray-200 dark:bg-gray-200 text-sm rounded hover:bg-gray-300 dark:hover:bg-gray-300"
           onClick={() => navigate("/dashboard")}
         >
           ← Back to Dashboard
@@ -90,42 +95,42 @@ const Playground = () => {
         <h1 className="text-2xl font-bold text-blue-700 dark:text-blue-300">{state.title}</h1>
 
         <div className="flex gap-2 mt-2 text-sm">
-          <span className="px-2 py-1 rounded bg-gray-200 dark:bg-gray-700">{state.topic}</span>
+          <span className="px-2 py-1 rounded bg-gray-200 uppercase dark:bg-gray-300">{state.topic}</span>
           <span className={`px-2 py-1 rounded ${difficultyBadge[state.difficulty] || "bg-gray-300"}`}>{state.difficulty}</span>
           <span className="px-2 py-1 rounded bg-blue-100 text-blue-800">{state.year || "N/A"}</span>
         </div>
 
         <section className="mt-6 space-y-4 text-sm">
           <div>
-            <h2 className="font-semibold text-base">Description:</h2>
-            <div className="bg-gray-100 dark:bg-gray-800 p-4 rounded whitespace-pre-wrap">{state.description}</div>
+            <h2 className="font-semibold text-base dark:text-white">Description:</h2>
+            <div className="bg-gray-100 dark:bg-gray-800 dark:text-white p-4 rounded whitespace-pre-wrap">{state.description}</div>
           </div>
 
           {state.inputFormat && (
             <div>
-              <h2 className="font-semibold text-base">Input Format:</h2>
-              <div className="bg-gray-100 dark:bg-gray-800 p-3 rounded">{state.inputFormat}</div>
+              <h2 className="font-semibold text-base dark:text-white">Input Format:</h2>
+              <div className="bg-gray-100 dark:bg-gray-800 dark:text-white p-3 rounded">{state.inputFormat}</div>
             </div>
           )}
 
           {state.outputFormat && (
             <div>
-              <h2 className="font-semibold text-base">Output Format:</h2>
-              <div className="bg-gray-100 dark:bg-gray-800 p-3 rounded">{state.outputFormat}</div>
+              <h2 className="font-semibold text-base dark:text-white">Output Format:</h2>
+              <div className="bg-gray-100 dark:bg-gray-800 dark:text-white p-3 rounded">{state.outputFormat}</div>
             </div>
           )}
 
           {state.constraints && (
             <div>
-              <h2 className="font-semibold text-base">Constraints:</h2>
-              <div className="bg-gray-100 dark:bg-gray-800 p-3 rounded whitespace-pre-wrap">{state.constraints}</div>
+              <h2 className="font-semibold text-base dark:text-white">Constraints:</h2>
+              <div className="bg-gray-100 dark:bg-gray-800 dark:text-white p-3 rounded whitespace-pre-wrap">{state.constraints}</div>
             </div>
           )}
 
           {state.examples?.length > 0 && (
             <div>
-              <h2 className="font-semibold text-base">Examples:</h2>
-              <ul className="space-y-2">
+              <h2 className="font-semibold text-base dark:text-white">Examples:</h2>
+              <ul className="space-y-2 dark:text-white">
                 {state.examples.map((ex, idx) => (
                   <li key={idx} className="bg-gray-100 dark:bg-gray-800 p-3 rounded">
                     <strong>Input:</strong> {ex.input}<br />
@@ -139,7 +144,7 @@ const Playground = () => {
       </div>
 
       {/* RIGHT PANEL */}
-      <div className="lg:w-1/2 w-full bg-gray-900 text-white rounded-md p-4 space-y-4">
+      <div className="lg:w-1/2 w-full bg-gray-200 dark:bg-gray-900 text-white rounded-md p-4 space-y-4">
         <div className="flex items-center justify-between">
           <select
             value={language}

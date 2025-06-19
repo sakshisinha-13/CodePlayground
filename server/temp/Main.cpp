@@ -1,31 +1,28 @@
 #include <iostream>
 #include <vector>
+#include <unordered_map>
 using namespace std;
 
-void twoSum(vector<int> &arr, int target, vector<int> &ans) {
-    int n = arr.size();
+int main() {
+    int n;
+    cin >> n; // number of elements
 
+    vector<int> nums(n);
+    for (int i = 0; i < n; i++) cin >> nums[i];
+
+    int target;
+    cin >> target;
+
+    unordered_map<int, int> mp;
     for (int i = 0; i < n; i++) {
-        for (int j = i + 1; j < n; j++) {
-            if (arr[i] + arr[j] == target) {
-                ans[0] = i;  // use index
-                ans[1] = j;
-                return;
-            }
+        int rem = target - nums[i];
+        if (mp.find(rem) != mp.end()) {
+            cout << "[" << mp[rem] << "," << i << "]";
+            return 0;
         }
+        mp[nums[i]] = i;
     }
 
-    ans[0] = -1;
-    ans[1] = -1;
-}
-
-int main() {
-    vector<int> arr = {3,2,4};  // sample input
-    int target = 6;
-    vector<int> ans(2);
-
-    twoSum(arr, target, ans);
-    cout << "[" << ans[0] << "," << ans[1] << "]" << endl;  // match format
-
+    cout << "[]"; // No valid pair found (should not happen based on constraints)
     return 0;
 }

@@ -49,7 +49,7 @@ export default function Dashboard() {
   const [assessmentType, setAssessmentType] = useState('');
   const [topic, setTopic] = useState('');
   const [year, setYear] = useState('');
-  const [difficulty, setDifficulty] = useState('');
+  // const [difficulty, setDifficulty] = useState('');
   const [darkMode, setDarkMode] = useState(false);
   const [simpleView, setSimpleView] = useState(false);
   const [noMatch, setNoMatch] = useState(false);
@@ -73,7 +73,7 @@ export default function Dashboard() {
   if (yoe) url.searchParams.append("yoe", yoe);
   if (assessmentType) url.searchParams.append("type", assessmentType);
   if (topic) url.searchParams.append("topic", topic);
-  if (difficulty) url.searchParams.append("difficulty", difficulty);
+  // if (difficulty) url.searchParams.append("difficulty", difficulty);
   if (year) url.searchParams.append("year", year);
 
   console.log("Fetching from:", url.toString());
@@ -91,10 +91,10 @@ export default function Dashboard() {
   }
 };
 
-
-  const toggleTick = (link) => {
-    setTickedQuestions(prev => ({ ...prev, [link]: !prev[link] }));
-  };
+const toggleTick = (key) => {
+  if (!key) return;
+  setTickedQuestions(prev => ({ ...prev, [key]: !prev[key] }));
+};
 
   const topicCounts = filteredQuestions.reduce((acc, q) => {
     const label = q.topic || 'General';
@@ -185,12 +185,12 @@ export default function Dashboard() {
                 <option key={yr} value={yr}>{yr}</option>
               ))}
             </select>
-            <select value={difficulty} onChange={e => setDifficulty(e.target.value)} className="p-3 border rounded-md dark:bg-gray-700 text-lg">
+            {/* <select value={difficulty} onChange={e => setDifficulty(e.target.value)} className="p-3 border rounded-md dark:bg-gray-700 text-lg">
               <option value="">All Levels</option>
               <option value="Easy">Easy</option>
               <option value="Medium">Medium</option>
               <option value="Hard">Hard</option>
-            </select>
+            </select> */}
           </div>
         </div>
 
