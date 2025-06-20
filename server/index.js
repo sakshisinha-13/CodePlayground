@@ -46,6 +46,9 @@ mongoose.connection.once("open", async () => {
 // --- Auth Routes ---
 const authRoutes = require("./routes/authRoutes");
 app.use("/api/auth", authRoutes);
+// --- Progress Routes ---
+const progressRoutes = require("./routes/progress");
+app.use("/api/progress", progressRoutes);
 
 // --- Code Execution Route ---
 const executeRoute = require("./routes/execute");
