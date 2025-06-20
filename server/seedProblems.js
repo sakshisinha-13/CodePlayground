@@ -66,15 +66,6 @@ Only one valid answer exists.`,
         output: "0"
       }
     ],
-    // testCases: [
-    //   {
-    //     input: "beginWord = \"hit\", endWord = \"cog\", wordList = [\"hot\",\"dot\",\"dog\",\"lot\",\"log\",\"cog\"]",
-    //     expectedOutput: "5"
-    //   },
-    //   {
-    //     input: "beginWord = \"hit\", endWord = \"cog\", wordList = [\"hot\",\"dot\",\"dog\",\"lot\",\"log\"]",
-    //     expectedOutput: "0"
-    //   }
     testCases: [
       {
         input: "hit cog 6\\nhot dot dog lot log cog",
@@ -134,17 +125,17 @@ Only one valid answer exists.`,
     constraints: "1 ≤ N ≤ 10^5, Array must be sorted.",
     examples: [
       {
-        input: "7 1 2 3 3 3 3 10 3",
-        output: "True"
+        input: "7\\n1 2 3 3 3 3 10\\n1",
+        output: "False"
       },
       {
-        input: "8 1 1 2 4 4 4 6 6 4",
+        input: "8\\n1 1 2 4 4 4 6 6\\n4",
         output: "False"
       }
     ],
     testCases: [
-      { input: "7 2 2 2 2 3 4 2", expectedOutput: "True" },
-      { input: "8 5 5 5 6 6 7 8 6", expectedOutput: "False" }
+      { input: "7\\n2 2 2 2 3 4\\n1", expectedOutput: "False" },
+      { input: "8\\n5 5 5 6 6 7 8\\n6", expectedOutput: "False" }
     ],
     difficulty: "Easy",
     topic: "dsa",

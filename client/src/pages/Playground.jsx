@@ -156,7 +156,7 @@ const runCode = async () => {
             onClick={runCode}
             className="bg-green-600 hover:bg-green-700 px-4 py-2 rounded-md font-semibold"
           >
-            Run Code
+            Run
           </button>
         </div>
 
