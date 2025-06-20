@@ -72,7 +72,7 @@ export default function Dashboard() {
   if (role) url.searchParams.append("role", role);
   if (yoe) url.searchParams.append("yoe", yoe);
   if (assessmentType) url.searchParams.append("type", assessmentType);
-  if (topic) url.searchParams.append("topic", topic);
+  if (topic) url.searchParams.append("topic", labelToKeyMap[topic] || topic);
   if (difficulty) url.searchParams.append("difficulty", difficulty);
   if (year) url.searchParams.append("year", year);
 

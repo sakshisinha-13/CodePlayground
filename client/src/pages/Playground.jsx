@@ -57,7 +57,7 @@ const runCode = async () => {
     const rawExamples = state.testCases || state.examples || [];
     const testCases = rawExamples.map((ex) => ({
       input: ex.input,
-      expectedOutput: ex.output,
+      expectedOutput: ex.expectedOutput || ex.output || "",
     }));
 
     const res = await axios.post("/api/execute", {

@@ -51,27 +51,58 @@ router.post("/", async (req, res) => {
 
     // Execute test cases
     const results = await Promise.all(
-      testCases.map(tc => {
-        return new Promise(resolve => {
-          const proc = exec(cfg.run, { cwd: WORKSPACE, timeout: 5000 }, (err, stdout, stderr) => {
-            const output = (err ? stderr || err.message : stdout).trim();
-            const expected = (tc.expectedOutput || "").trim();
-            resolve({
-              input: tc.input,
-              expectedOutput: expected,
-              actualOutput: output,
-              status: output === expected ? "✅ Accepted" : "❌ Failed",
-                passed: output === expected
-            });
-          });
+    //   testCases.map(tc => {
+    //     return new Promise(resolve => {
+    //       const proc = exec(cfg.run, { cwd: WORKSPACE, timeout: 5000 }, (err, stdout, stderr) => {
+    //         const output = (err ? stderr || err.message : stdout).trim();
+    //         const expected = (tc.expectedOutput || "").trim();
+    //         resolve({
+    //           input: tc.input,
+    //           expectedOutput: expected,
+    //           actualOutput: output,
+    //           status: output === expected ? "✅ Accepted" : "❌ Failed",
+    //             passed: output === expected
+    //         });
+    //       });
 
-          // Send test input via stdin
-          if (proc.stdin) {
-            proc.stdin.write(tc.input || "");
-            proc.stdin.end();
-          }
-        });
-      })
+    //       // Send test input via stdin
+    //       if (proc.stdin) {
+    //         proc.stdin.write((tc.input || "").replace(/\\n/g, "\n"));
+    //         proc.stdin.end();
+    //       }
+    //     });
+    //   }
+    // )
+    testCases.map(tc => {
+  console.log("🚀 Running Test Case:");
+  console.log("Input:", tc.input);
+  console.log("Expected Output (raw):", tc.expectedOutput);
+
+  return new Promise(resolve => {
+    const proc = exec(cfg.run, { cwd: WORKSPACE, timeout: 5000 }, (err, stdout, stderr) => {
+      const output = (err ? stderr || err.message : stdout).trim();
+      const expected = (tc.expectedOutput || "").trim();
+
+      console.log("👉 Actual Output:", output);
+      console.log("👉 Expected Output:", expected);
+      console.log("✅ Match:", output === expected);
+
+      resolve({
+        input: tc.input,
+        expectedOutput: expected,
+        actualOutput: output,
+        status: output === expected ? "✅ Accepted" : "❌ Failed",
+        passed: output === expected
+      });
+    });
+
+    if (proc.stdin) {
+      proc.stdin.write((tc.input || "").replace(/\\n/g, "\n"));
+      proc.stdin.end();
+    }
+  });
+})
+
     );
 
     res.json(results);

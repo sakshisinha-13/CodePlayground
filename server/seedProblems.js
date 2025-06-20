@@ -66,16 +66,26 @@ Only one valid answer exists.`,
         output: "0"
       }
     ],
+    // testCases: [
+    //   {
+    //     input: "beginWord = \"hit\", endWord = \"cog\", wordList = [\"hot\",\"dot\",\"dog\",\"lot\",\"log\",\"cog\"]",
+    //     expectedOutput: "5"
+    //   },
+    //   {
+    //     input: "beginWord = \"hit\", endWord = \"cog\", wordList = [\"hot\",\"dot\",\"dog\",\"lot\",\"log\"]",
+    //     expectedOutput: "0"
+    //   }
     testCases: [
-      {
-        input: "beginWord = \"hit\", endWord = \"cog\", wordList = [\"hot\",\"dot\",\"dog\",\"lot\",\"log\",\"cog\"]",
-        expectedOutput: "5"
-      },
-      {
-        input: "beginWord = \"hit\", endWord = \"cog\", wordList = [\"hot\",\"dot\",\"dog\",\"lot\",\"log\"]",
-        expectedOutput: "0"
-      }
-    ],
+  {
+    input: "hit cog 6\\nhot dot dog lot log cog",
+    expectedOutput: "5"
+  },
+  {
+    input: "hit cog 5\\nhot dot dog lot log",
+    expectedOutput: "0"
+  }
+]
+,
     difficulty: "Hard",
     topic: "dsa",
     type: "Interview",
@@ -84,32 +94,32 @@ Only one valid answer exists.`,
     yoe: "College Graduate"
   },
   {
-    title: "Generate Parentheses",
-    description: "Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.",
-    inputFormat: "n = 3",
-    outputFormat: "[\"((()))\",\"(()())\",\"(())()\",\"()(())\",\"()()()\"]",
-    constraints: "1 <= n <= 8",
-    examples: [
-      {
-        input: "n = 3",
-        output: "[\"((()))\",\"(()())\",\"(())()\",\"()(())\",\"()()()\"]"
-      },
-      {
-        input: "n = 1",
-        output: "[\"()\"]"
-      }
-    ],
-    testCases: [
-      { input: "n = 2", expectedOutput: "[\"(())\",\"()()\"]" },
-      { input: "n = 4", expectedOutput: "[\"(((())))\",\"((()()))\",\"((())())\",\"((()))()\",\"(()(()))\",\"(()()())\",\"(()())()\",\"(())(())\",\"(())()()\",\"()((()))\",\"()(()())\",\"()(())()\",\"()()(())\",\"()()()()\"]" }
-    ],
-    difficulty: "Medium",
-    topic: "dsa",
-    type: "Interview",
-    company: "Microsoft",
-    role: "Software Engineer",
-    yoe: "College Graduate"
-  },
+  title: "Generate Parentheses",
+  description: "Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.",
+  inputFormat: "n (e.g., 3)",
+  outputFormat: "[\"((()))\",\"(()())\",\"(())()\",\"()(())\",\"()()()\"]",
+  constraints: "1 <= n <= 8",
+  examples: [
+    {
+      input: "3",
+      output: "[\"((()))\",\"(()())\",\"(())()\",\"()(())\",\"()()()\"]"
+    },
+    {
+      input: "1",
+      output: "[\"()\"]"
+    }
+  ],
+  testCases: [
+    {
+      input: "2",
+      expectedOutput: "[\"(())\",\"()()\"]"
+    },
+    {
+      input: "4",
+      expectedOutput: "[\"(((())))\",\"((()()))\",\"((())())\",\"((()))()\",\"(()(()))\",\"(()()())\",\"(()())()\",\"(())(())\",\"(())()()\",\"()((()))\",\"()(()())\",\"()(())()\",\"()()(())\",\"()()()()\"]"
+    }
+  ]
+},
   {
     title: "Check for Majority Element in a Sorted Array",
     description: "Given an array arr of N elements, a majority element is one that appears more than N/2 times. Write a function `isMajority()` that returns true if the given element is a majority element in the sorted array.",
@@ -130,10 +140,19 @@ Only one valid answer exists.`,
         output: "True"
       }
     ],
-    testCases: [
-      { input: "{2,2,2,2,3,4}, x = 2", expectedOutput: "True" },
-      { input: "{5,5,5,6,6,7,8}, x = 6", expectedOutput: "False" }
-    ],
+   testCases: [
+  {
+    input: "5 1 2 3 10 20",
+    expectedOutput: "3"
+  },
+  {
+    input: "6 4 5 6 1 2 3",
+    expectedOutput: "3"
+  }
+]
+
+
+,
     difficulty: "Easy",
     topic: "dsa",
     type: "Interview",
