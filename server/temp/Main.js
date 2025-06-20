@@ -1,16 +1,52 @@
 // Write your code here.
-function isMajorityElement(input) {
-  const parts = input.trim().split(" ").map(Number);
-  const N = parts[0];
-  const arr = parts.slice(1, N + 1); // first N elements after N
-  const x = parts[N + 1];
+#include <iostream>
+#include <unordered_set>
+#include <queue>
+#include <string>
+#include <vector>
 
-  // Function to find first occurrence of x
-  const firstIndex = arr.indexOf(x);
-  if (firstIndex === -1) return false;
+using namespace std;
 
-  const lastIndex = arr.lastIndexOf(x);
-  const count = lastIndex - firstIndex + 1;
+int wordLadderLength(string beginWord, string endWord, vector<string>& wordList) {
+    unordered_set<string> wordSet(wordList.begin(), wordList.end());
 
-  return count > Math.floor(N / 2);
+    if (wordSet.find(endWord) == wordSet.end())
+        return 0;
+
+    queue<pair<string, int>> q;
+    q.push({beginWord, 1});
+
+    while (!q.empty()) {
+        auto [word, steps] = q.front();
+        q.pop();
+
+        if (word == endWord) return steps;
+
+        for (int i = 0; i < word.length(); ++i) {
+            string temp = word;
+            for (char c = 'a'; c <= 'z'; ++c) {
+                temp[i] = c;
+                if (wordSet.find(temp) != wordSet.end()) {
+                    q.push({temp, steps + 1});
+                    wordSet.erase(temp); // remove to prevent revisiting
+                }
+            }
+        }
+    }
+
+    return 0;
+}
+
+int main() {
+    string beginWord, endWord;
+    int n;
+    cin >> beginWord >> endWord >> n;
+    
+    vector<string> wordList(n);
+    for (int i = 0; i < n; ++i) {
+        cin >> wordList[i];
+    }
+
+    cout << wordLadderLength(beginWord, endWord, wordList) << endl;
+    return 0;
 }
