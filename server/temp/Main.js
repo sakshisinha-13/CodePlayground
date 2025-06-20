@@ -1,25 +1,16 @@
-function twoSum(nums, target) {
-  const map = new Map(); // number -> index
+// Write your code here.
+function isMajorityElement(input) {
+  const parts = input.trim().split(" ").map(Number);
+  const N = parts[0];
+  const arr = parts.slice(1, N + 1); // first N elements after N
+  const x = parts[N + 1];
 
-  for (let i = 0; i < nums.length; i++) {
-    const complement = target - nums[i];
-    if (map.has(complement)) {
-      return [map.get(complement), i];
-    }
-    map.set(nums[i], i);
-  }
+  // Function to find first occurrence of x
+  const firstIndex = arr.indexOf(x);
+  if (firstIndex === -1) return false;
 
-  return [-1, -1];
+  const lastIndex = arr.lastIndexOf(x);
+  const count = lastIndex - firstIndex + 1;
+
+  return count > Math.floor(N / 2);
 }
-
-// Read from stdin
-const fs = require("fs");
-const input = fs.readFileSync(0, "utf-8").trim().split(/\s+/);
-
-// First value is array size
-const n = parseInt(input[0]);
-const nums = input.slice(1, 1 + n).map(Number);
-const target = parseInt(input[1 + n]);
-
-const result = twoSum(nums, target);
-console.log(JSON.stringify(result));
