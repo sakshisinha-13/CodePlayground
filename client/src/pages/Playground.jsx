@@ -37,8 +37,9 @@ const Playground = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
 
-  const [code, setCode] = useState(defaultCodeMap["C++"]);
+  const [code, setCode] = useState(defaultCodeMap["c_cpp"]);
   const [language, setLanguage] = useState("c_cpp");
+  const [isRunning, setIsRunning] = useState(false);
   const [input, setInput] = useState("");
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);

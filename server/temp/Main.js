@@ -1,52 +1,58 @@
 // Write your code here.
 #include <iostream>
-#include <unordered_set>
-#include <queue>
-#include <string>
 #include <vector>
-
+#include <string>
+#include <map>
+#include <climits>
+#include <algorithm>
 using namespace std;
 
-int wordLadderLength(string beginWord, string endWord, vector<string>& wordList) {
-    unordered_set<string> wordSet(wordList.begin(), wordList.end());
+int minWordTransform(string start, string target, map<string, int> &mp) {
+    if (start == target) return 1;
 
-    if (wordSet.find(endWord) == wordSet.end())
-        return 0;
+    mp[start] = 1;
+    int mini = INT_MAX;
 
-    queue<pair<string, int>> q;
-    q.push({beginWord, 1});
+    for (int i = 0; i < start.size(); i++) {
+        char originalChar = start[i];
 
-    while (!q.empty()) {
-        auto [word, steps] = q.front();
-        q.pop();
+        for (char ch = 'a'; ch <= 'z'; ch++) {
+            if (ch == originalChar) continue;
 
-        if (word == endWord) return steps;
+            start[i] = ch;
 
-        for (int i = 0; i < word.length(); ++i) {
-            string temp = word;
-            for (char c = 'a'; c <= 'z'; ++c) {
-                temp[i] = c;
-                if (wordSet.find(temp) != wordSet.end()) {
-                    q.push({temp, steps + 1});
-                    wordSet.erase(temp); // remove to prevent revisiting
-                }
+            if (mp.find(start) != mp.end() && mp[start] == 0) {
+                int next = minWordTransform(start, target, mp);
+                if (next != INT_MAX)
+                    mini = min(mini, 1 + next);
             }
         }
+
+        start[i] = originalChar;
     }
 
-    return 0;
+    mp[start] = 0;  // backtrack
+    return mini;
+}
+
+int wordLadder(string start, string target, vector<string>& arr) {
+    map<string, int> mp;
+    for (auto &word : arr) {
+        mp[word] = 0;
+    }
+
+    int res = minWordTransform(start, target, mp);
+    return res == INT_MAX ? 0 : res;
 }
 
 int main() {
-    string beginWord, endWord;
     int n;
-    cin >> beginWord >> endWord >> n;
-    
-    vector<string> wordList(n);
-    for (int i = 0; i < n; ++i) {
-        cin >> wordList[i];
-    }
+    string start, target;
+    cin >> start >> target >> n;
 
-    cout << wordLadderLength(beginWord, endWord, wordList) << endl;
+    vector<string> arr(n);
+    for (int i = 0; i < n; ++i) cin >> arr[i];
+
+    cout << wordLadder(start, target, arr) << endl;
     return 0;
 }
