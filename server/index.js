@@ -15,7 +15,7 @@ require("dotenv").config();
 const app = express();
 app.use(
   cors({
-    origin: "http://localhost:3000", // or "*" for testing
+    origin: ["http://localhost:3000", "http://frontend:3000"],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
@@ -61,12 +61,12 @@ app.use("/api/problems", problemRoutes); // Mounts GET /api/problems
 const path = require("path");
 
 // Serve static files from React
-app.use(express.static(path.join(__dirname, "../client/build")));
+// app.use(express.static(path.join(__dirname, "../client/build")));
 
-// Fallback for React Router routes
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../client/build/index.html"));
-});
+// // Fallback for React Router routes
+// app.get("*", (req, res) => {
+//   res.sendFile(path.join(__dirname, "../client/build/index.html"));
+// });
 
 
 // --- Start Server ---

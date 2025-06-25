@@ -39,8 +39,6 @@ const Playground = () => {
 
   const [code, setCode] = useState(defaultCodeMap["c_cpp"]);
   const [language, setLanguage] = useState("c_cpp");
-  const [isRunning, setIsRunning] = useState(false);
-  const [input, setInput] = useState("");
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -52,28 +50,36 @@ const Playground = () => {
   useEffect(() => {
     setCode(defaultCodeMap[language]);
   }, [language]);
-const runCode = async () => {
-  setLoading(true);
-  try {
-    const rawExamples = state.testCases || state.examples || [];
-    const testCases = rawExamples.map((ex) => ({
-      input: ex.input,
-      expectedOutput: ex.expectedOutput || ex.output || "",
-    }));
+  const runCode = async () => {
+    setLoading(true);
+    try {
+      const raw = Array.isArray(state.testCases)
+        ? state.testCases
+        : Array.isArray(state.examples)
+          ? state.examples
+          : [];
 
-    const res = await axios.post("/api/execute", {
-      language,
-      code,
-      testCases,
-    });
+      const testCases = Array.isArray(raw)
+      ? raw.map((ex) => ({
+          input: ex.input,
+          expectedOutput: ex.expectedOutput || ex.output || "",
+        }))
+      : [];
 
-    setResults(res.data); // ✅ directly assign array
-  } catch (err) {
-    setResults([{ status: "Error", actualOutput: err.message }]);
-  } finally {
-    setLoading(false);
-  }
-};
+      const res = await axios.post("http://localhost:5000/api/execute", {
+        language,
+        code,
+        testCases,
+      });
+
+      setResults(res.data);
+    } catch (err) {
+      setResults([{ status: "Error", actualOutput: err.message }]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
 
 
 
@@ -125,7 +131,7 @@ const runCode = async () => {
             </div>
           )}
 
-          {state.examples?.length > 0 && (
+          {Array.isArray(state.examples) && state.examples.length > 0 && (
             <div>
               <h2 className="font-semibold text-base dark:text-white">Examples:</h2>
               <ul className="space-y-2 dark:text-white">
@@ -138,6 +144,7 @@ const runCode = async () => {
               </ul>
             </div>
           )}
+
         </section>
       </div>
 
@@ -155,10 +162,13 @@ const runCode = async () => {
           </select>
           <button
             onClick={runCode}
-            className="bg-green-600 hover:bg-green-700 px-4 py-2 rounded-md font-semibold"
+            className={`px-4 py-2 rounded mt-2 transition-colors duration-200
+    ${loading ? "bg-blue-900 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-600 text-white"}`}
+            disabled={loading}
           >
-            Run
+            {loading ? "Running..." : "Run"}
           </button>
+
         </div>
 
         <AceEditor
@@ -182,19 +192,19 @@ const runCode = async () => {
           }}
         />
 
-        {results.length > 0 && (
-  <div className="bg-gray-800 p-4 rounded-md text-sm space-y-3 max-h-[300px] overflow-y-auto">
-    <h3 className="font-bold text-lg">Test Case Results:</h3>
-    {results.map((res, idx) => (
-      <div key={idx} className={`p-2 rounded ${res.status?.includes("Accepted") ? 'bg-green-800' : 'bg-red-900'}`}>
-        <p><strong>Input:</strong> {res.input}</p>
-        <p><strong>Expected:</strong> {res.expectedOutput}</p>
-        <p><strong>Actual:</strong> {res.actualOutput}</p>
-        <p><strong>Status:</strong> {res.status}</p>
-      </div>
-    ))}
-  </div>
-)}
+        {Array.isArray(results) && results.length > 0 && (
+          <div className="bg-gray-800 p-4 rounded-md text-sm space-y-3 max-h-[300px] overflow-y-auto">
+            <h3 className="font-bold text-lg">Test Case Results:</h3>
+            {results.map((res, idx) => (
+              <div key={idx} className={`p-2 rounded ${res.status?.includes("Accepted") ? 'bg-green-800' : 'bg-red-900'}`}>
+                <p><strong>Input:</strong> {res.input}</p>
+                <p><strong>Expected:</strong> {res.expectedOutput}</p>
+                <p><strong>Actual:</strong> {res.actualOutput}</p>
+                <p><strong>Status:</strong> {res.status}</p>
+              </div>
+            ))}
+          </div>
+        )}
 
       </div>
     </div>

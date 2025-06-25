@@ -31,6 +31,8 @@ function Signup() {
     theme: "dark",
   };
 
+  const API = process.env.REACT_APP_API_BASE;
+
   // 🔐 Redirect if already logged in
   useEffect(() => {
     const existingUser = localStorage.getItem("codeplayground-user");
@@ -49,7 +51,7 @@ function Signup() {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/auth/signup",
+        `${API}/api/auth/signup`,
         { username, email, password },
         {
           validateStatus: function (status) {

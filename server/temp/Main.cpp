@@ -1,31 +1,28 @@
 #include <iostream>
 #include <vector>
+#include <unordered_map>
 using namespace std;
 
-int findLongestConsecutiveIncreasingSubsequence(const vector<int>& arr) {
-    int maxLen = 1, currLen = 1;
-
-    for (int i = 1; i < arr.size(); i++) {
-        if (arr[i] == arr[i - 1] + 1) {
-            currLen++;
-            maxLen = max(maxLen, currLen);
-        } else {
-            currLen = 1;
-        }
-    }
-
-    return maxLen;
-}
-
 int main() {
-    int N;
-    cin >> N;
-    vector<int> arr(N);
+    int n, target;
+    cin >> n;
+    vector<int> nums(n);
+    
+    for (int i = 0; i < n; ++i)
+        cin >> nums[i];
+    
+    cin >> target;
 
-    for (int i = 0; i < N; i++) {
-        cin >> arr[i];
+    unordered_map<int, int> mp;
+    for (int i = 0; i < n; ++i) {
+        int rem = target - nums[i];
+        if (mp.find(rem) != mp.end()) {
+            cout << "[" << mp[rem] << "," << i << "]";
+            return 0;
+        }
+        mp[nums[i]] = i;
     }
 
-    cout << findLongestConsecutiveIncreasingSubsequence(arr) << endl;
+    cout << "[-1,-1]";
     return 0;
 }

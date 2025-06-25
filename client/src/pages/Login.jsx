@@ -42,10 +42,11 @@ function Login() {
     if (handleValidation()) {
       const { email, password } = values;
       try {
-        const { data } = await axios.post("http://localhost:5000/api/auth/login", {
-          email,
-          password,
-        });
+        const { data } = await axios.post(
+          `${process.env.REACT_APP_API_BASE}/api/auth/login`,
+          { email, password }
+        );
+
         localStorage.setItem("codeplayground-user", JSON.stringify(data.user));
         localStorage.setItem("token", data.token);
         navigate("/dashboard");
