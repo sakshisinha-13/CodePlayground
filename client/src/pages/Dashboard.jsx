@@ -1,12 +1,3 @@
-// src/pages/Dashboard.jsx
-// -----------------------------------------------------------------------------
-// Main dashboard page after login. Allows users to:
-// - Search for companies
-// - Filter coding questions by role, YOE, topic, year, difficulty, etc.
-// - Export questions to CSV, PDF, Markdown
-// - View insights: topic-wise pie chart, year-wise trend, repeated questions
-// -----------------------------------------------------------------------------
-
 import { useState, useEffect, useRef } from 'react';
 import { Pie } from 'react-chartjs-2';
 import { exportToCSV } from '../exports/exportCSV';
