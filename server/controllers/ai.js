@@ -17,7 +17,7 @@ const getCodeFeedback = async (req, res) => {
 
   try {
     const response = await openai.chat.completions.create({
-      model: "gpt-4", // or "gpt-3.5-turbo" if you're on free tier
+      model: "gpt-3.5-turbo", // or "gpt-3.5-turbo" if you're on free tier
       messages: [
         {
           role: "system",
@@ -34,10 +34,14 @@ const getCodeFeedback = async (req, res) => {
     const feedback = response.choices[0].message.content;
     console.log("✅ AI feedback generated.");
     res.json({ feedback });
-  } catch (err) {
-    console.error("❌ OpenAI error:", err.response?.data || err.message || err);
-    res.status(500).json({ error: "AI feedback failed.", details: err.message });
-  }
+ } catch (err) {
+  console.error("❌ OpenAI error:", err.response?.data || err.message || err);
+  res.status(500).json({
+    error: "AI feedback failed.",
+    details: err.response?.data || err.message || err.toString(),
+  });
+}
+
 };
 
 module.exports = { getCodeFeedback };
