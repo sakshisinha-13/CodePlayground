@@ -3,10 +3,9 @@ services:
   backend:
     build: ./server
     ports:
-      - "5000:5000"
-    environment:
-      - MONGO_URI=mongodb+srv://Sakshi:sakshi123@cluster0.oza1zcj.mongodb.net/codeplayground?retryWrites=true&w=majority&appName=Cluster0
-      - JWT_SECRET=algouni-secret
+      - "5050:5000"
+    env_file:
+      - ./server/.env
     volumes:
       - ./server:/app
 

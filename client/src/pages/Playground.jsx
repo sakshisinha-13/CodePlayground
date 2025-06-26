@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import AceEditor from "react-ace";
 import axios from "axios";
+import { getAIResponse } from "../api/ai"; // ✅ Import AI helper
 
 import "ace-builds/src-noconflict/mode-javascript";
 import "ace-builds/src-noconflict/mode-python";
@@ -41,6 +42,8 @@ const Playground = () => {
   const [language, setLanguage] = useState("c_cpp");
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [feedback, setFeedback] = useState(""); // ✅ AI Feedback
+  const [aiLoading, setAiLoading] = useState(false); // ✅ AI loading
 
   useEffect(() => {
     if (!state || !state.title) navigate("/dashboard");
@@ -60,11 +63,11 @@ const Playground = () => {
           : [];
 
       const testCases = Array.isArray(raw)
-      ? raw.map((ex) => ({
+        ? raw.map((ex) => ({
           input: ex.input,
           expectedOutput: ex.expectedOutput || ex.output || "",
         }))
-      : [];
+        : [];
 
       const res = await axios.post("http://localhost:5000/api/execute", {
         language,
@@ -80,7 +83,12 @@ const Playground = () => {
     }
   };
 
-
+  const getAIReview = async () => {
+    setAiLoading(true);
+    const result = await getAIResponse(code);
+    setFeedback(result);
+    setAiLoading(false);
+  };
 
 
   if (!state) return null;
@@ -168,6 +176,13 @@ const Playground = () => {
           >
             {loading ? "Running..." : "Run"}
           </button>
+          <button
+            onClick={getAIReview}
+            className="px-4 py-2 rounded mt-2 bg-purple-600 hover:bg-purple-700 transition disabled:opacity-60"
+            disabled={aiLoading}
+          >
+            {aiLoading ? "Analyzing..." : "AI Feedback"}
+          </button>
 
         </div>
 
@@ -203,6 +218,12 @@ const Playground = () => {
                 <p><strong>Status:</strong> {res.status}</p>
               </div>
             ))}
+          </div>
+        )}
+        {feedback && (
+          <div className="bg-white dark:bg-gray-800 p-4 rounded mt-4 text-sm text-black dark:text-white border border-purple-500 whitespace-pre-line">
+            <h3 className="font-bold text-lg text-purple-700 dark:text-purple-300 mb-2">💡 AI Feedback:</h3>
+            {feedback}
           </div>
         )}
 

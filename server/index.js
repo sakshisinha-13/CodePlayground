@@ -58,6 +58,11 @@ app.use("/api/execute", executeRoute);
 const problemRoutes = require("./routes/problems");
 app.use("/api/problems", problemRoutes); // Mounts GET /api/problems
 
+// --- AI ---
+const aiRoutes = require("./routes/ai");
+app.use("/api/ai", aiRoutes);
+
+
 const path = require("path");
 
 // Serve static files from React

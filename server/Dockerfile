@@ -5,7 +5,7 @@ FROM node:18-alpine3.19
 
 WORKDIR /app
 
-# ✅ Use apk (not apt) to install python3 and g++
+# ✅ Use apk to install python3 and g++
 RUN apk add --no-cache python3 g++
 
 COPY package*.json ./
