@@ -7,6 +7,8 @@ const getCodeFeedback = async (req, res) => {
   if (!code) {
     return res.status(400).json({ error: "Code is required." });
   }
+  console.log("🔑 API KEY LOADED:", process.env.OPENROUTER_API_KEY);
+
 
   try {
     const response = await axios.post(
@@ -27,7 +29,7 @@ const getCodeFeedback = async (req, res) => {
       {
         headers: {
   Authorization: `Bearer ${process.env.OPENROUTER_API_KEY}`,
-  "HTTP-Referer": "http://localhost:3000", // Optional
+  //"HTTP-Referer": "http://localhost:3000", // Optional
   "Content-Type": "application/json",
 },
 
@@ -38,7 +40,7 @@ const getCodeFeedback = async (req, res) => {
     res.json({ feedback });
   } catch (err) {
     console.error("OpenRouter AI error:", err.response?.data || err.message);
-    res.status(500).json({ error: "AI feedback failed", details: err.message });
+    res.status(500).json({ error: "AI feedback failed", details: err.response?.data || err.message, });
   }
 };
 

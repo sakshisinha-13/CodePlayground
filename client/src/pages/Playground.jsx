@@ -3,6 +3,12 @@ import { useLocation, useNavigate } from "react-router-dom";
 import AceEditor from "react-ace";
 import axios from "axios";
 import { getAIResponse } from "../api/ai"; // ✅ Import AI helper
+import {
+  Panel,
+  PanelGroup,
+  PanelResizeHandle,
+} from "react-resizable-panels";
+
 
 import "ace-builds/src-noconflict/mode-javascript";
 import "ace-builds/src-noconflict/mode-python";
@@ -53,6 +59,7 @@ const Playground = () => {
   useEffect(() => {
     setCode(defaultCodeMap[language]);
   }, [language]);
+
   const runCode = async () => {
     setLoading(true);
     try {
@@ -95,6 +102,7 @@ const Playground = () => {
 
   return (
     <div className="min-h-screen flex flex-col md:flex-row bg-gray-50 dark:bg-gray-900">
+     
       {/* LEFT PANEL */}
       <div className="md:w-1/2 p-6 overflow-y-auto max-h-screen bg-white dark:bg-gray-900 border-b md:border-b-0 md:border-r border-gray-300 dark:border-gray-700">
         <button
@@ -228,7 +236,8 @@ const Playground = () => {
         )}
 
       </div>
-    </div>
+     
+     </div>
   );
 };
 
