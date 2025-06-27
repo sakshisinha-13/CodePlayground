@@ -46,7 +46,7 @@ const getCodeFeedback = async (req, res) => {
           {
             parts: [
               {
-                text: `Please review this code and give concise and helpful suggestions:\n\n${code}`,
+                text: `Please review this code and give concise suggestions:\n\n${code}`,
               },
             ],
           },
